@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Settlement.InternalApi", "Sources\Settlement.InternalApi\Settlement.InternalApi.csproj", "{F42A4388-140F-4139-AD2F-033CE905AD9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{78F98D00-A6E2-43A8-89D8-72111E8F7B7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0C5E4C20-E72D-4300-8E12-DDD6CAD9ACF6}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		.gitlab-ci.yml = .gitlab-ci.yml
+		Dockerfile = Dockerfile
+		Settlement.InternalApi.sln.DotSettings = Settlement.InternalApi.sln.DotSettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement.Gaming", "Sources\Settlement.Gaming\Settlement.Gaming.csproj", "{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement.Internal", "Sources\Settlement.Internal\Settlement.Internal.csproj", "{594A2E25-6472-46B9-A1B4-6994550087FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F42A4388-140F-4139-AD2F-033CE905AD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42A4388-140F-4139-AD2F-033CE905AD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42A4388-140F-4139-AD2F-033CE905AD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42A4388-140F-4139-AD2F-033CE905AD9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{594A2E25-6472-46B9-A1B4-6994550087FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{594A2E25-6472-46B9-A1B4-6994550087FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{594A2E25-6472-46B9-A1B4-6994550087FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{594A2E25-6472-46B9-A1B4-6994550087FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F42A4388-140F-4139-AD2F-033CE905AD9A} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
+		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
+		{594A2E25-6472-46B9-A1B4-6994550087FF} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FED1FFD3-63AC-438E-84B6-EEE2BD5DD1B0}
+	EndGlobalSection
+EndGlobal
