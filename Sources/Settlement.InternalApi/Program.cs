@@ -1,5 +1,6 @@
 using MinimalApi.Endpoint.Extensions;
 using Settlement.Internal.Models;
+using Settlement.InternalApi;
 using Settlement.InternalApi.Config;
 using Settlement.InternalApi.Middleware;
 
@@ -12,6 +13,8 @@ builder.Services.AddHealthChecks();
 builder.Services.Configure<AppSettingsKey>(builder.Configuration);
 
 builder.Services.AddInitialServices(builder.Configuration);
+
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
 

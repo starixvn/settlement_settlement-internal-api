@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.4" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.4" />
     <PackageReference Include="Fanex.Data" Version="4.2.5.3" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Settlement.Gaming\Settlement.Gaming.csproj" />
     <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />
   </ItemGroup>
 

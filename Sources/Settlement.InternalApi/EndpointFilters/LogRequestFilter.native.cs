@@ -18,7 +18,7 @@ public class LogRequestFilter(IOptions<AppSettingsKey> appSettingsKey) : IEndpoi
             var serialString = JsonConvert.SerializeObject(model);
             var url = context.HttpContext.Request.GetDisplayUrl();
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"ExternalApi - Url: {url}");
+            stringBuilder.AppendLine($"InternalApi - Url: {url}");
             stringBuilder.AppendLine($"Params: {serialString}");
 
             await new Logger().InfoAsync(stringBuilder.ToString());

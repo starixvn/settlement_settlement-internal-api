@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="Handlers\**" />
+    <Compile Remove="Models\NumberGame\**" />
+    <Compile Remove="Services\NumberGame\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="Handlers\**" />
+    <EmbeddedResource Remove="Models\NumberGame\**" />
+    <EmbeddedResource Remove="Services\NumberGame\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="Handlers\**" />
+    <None Remove="Models\NumberGame\**" />
+    <None Remove="Services\NumberGame\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.4" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.4" />
     <PackageReference Include="Fanex.Data" Version="4.2.5.3" />
@@ -16,6 +31,14 @@
     <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.1" />
     <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.8" />
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1.2" />
+    <PackageReference Include="Fanex.NAP.Client.AspNetCore" Version="2.0.0.13" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.4" />
+    <PackageReference Include="Fanex.Settlement.Converter" Version="1.0.0.1" />
+    <PackageReference Include="Fanex.Settlement.ScaleOut" Version="1.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />
   </ItemGroup>
 
 </Project>

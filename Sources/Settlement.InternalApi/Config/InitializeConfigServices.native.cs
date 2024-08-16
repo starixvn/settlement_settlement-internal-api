@@ -7,10 +7,19 @@ using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
+using Fanex.NAP.Client.Configuration;
+using Fanex.NAP.Client.Helpers.Web;
+using Fanex.NAP.Client.Services;
+using Fanex.NAP.Client.Session;
+using Fanex.RemotingRef;
+using Fanex.Settlement.Converter.Services;
+using Fanex.Settlement.ScaleOut.Services;
 using ONEbook.UM;
 using ONEbook.UM.AspNetCore;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Transport;
+using Settlement.Internal.Services;
+using Settlement.WebSites.Configurations;
 using SharpRaven;
 using StackExchange.Redis;
 using ILogger = Fanex.Logging.ILogger;
@@ -28,13 +37,34 @@ public static class InitializeConfigServices
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddTransient<ILogger, Logger>();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IDynamicRepository, DynamicRepository>();
+        services.AddCoreServices(configuration);
+        services.GamingConfigServices();
 
         StartUmSetting(configuration);
         StartLogSetting(configuration);
         return services;
+    }
+
+    private static void AddCoreServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<INapSettings>(new NapSettings(configuration));
+        services.AddSingleton<INapSession, NapSession>();
+        services.AddSingleton<ICacheService, CacheService>();
+        services.AddSingleton<IUserService, UserService>();
+        services.AddSingleton<ISecurityService, SecurityService>();
+
+        services.AddTransient<ILogger, Logger>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<IDynamicRepository, DynamicRepository>();
+        services.AddSingleton<IRemotingRefService, RemotingRefService>();
+        services.AddTransient<IRefDataService, RefDataService>();
+        services.AddSingleton<PermissionService, PermissionServiceImp>();
+        services.AddSingleton<XmlConvertService, XmlConvertServiceImp>();
+        services.AddTransient<Internal.Services.LogService, LogServiceImp>();
+
+        services.AddTransient<ScaleOutSettleService, ScaleOutSettleServiceImp>();
+        services.AddTransient<ScaleOutSettleThirdPartyService, ScaleOutSettleThirdPartyServiceImp>();
+        services.AddTransient<GeneralService, GeneralServiceImp>();
     }
 
     private static void AddConfigRedisCache(this IServiceCollection service, IConfiguration configuration)
