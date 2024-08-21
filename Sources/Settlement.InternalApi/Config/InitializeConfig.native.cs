@@ -19,14 +19,13 @@ using ONEbook.UM.AspNetCore;
 using ONEbook.UM.Configurations;
 using ONEbook.UM.Transport;
 using Settlement.Internal.Services;
-using Settlement.WebSites.Configurations;
 using SharpRaven;
 using StackExchange.Redis;
 using ILogger = Fanex.Logging.ILogger;
 
 namespace Settlement.InternalApi.Config;
 
-public static class InitializeConfigServices
+public static class InitializeConfig
 {
     public static IServiceCollection AddInitialServices(this IServiceCollection services, IConfiguration configuration)
     {
@@ -38,7 +37,8 @@ public static class InitializeConfigServices
         services.AddSwaggerGen();
 
         services.AddCoreServices(configuration);
-        services.GamingConfigServices();
+        services.AddGamingConfigServices();
+        services.AddInitializeBusinessServices();
 
         StartUmSetting(configuration);
         StartLogSetting(configuration);
@@ -55,7 +55,7 @@ public static class InitializeConfigServices
 
         services.AddTransient<ILogger, Logger>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddScoped<IDynamicRepository, DynamicRepository>();
+        services.AddTransient<IDynamicRepository, DynamicRepository>();
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
         services.AddTransient<IRefDataService, RefDataService>();
         services.AddSingleton<PermissionService, PermissionServiceImp>();
@@ -65,6 +65,12 @@ public static class InitializeConfigServices
         services.AddTransient<ScaleOutSettleService, ScaleOutSettleServiceImp>();
         services.AddTransient<ScaleOutSettleThirdPartyService, ScaleOutSettleThirdPartyServiceImp>();
         services.AddTransient<GeneralService, GeneralServiceImp>();
+
+        RefDataTypeContainer
+            .ConnectTo(new Uri(configuration.GetSection("RemotingRef").Value))
+            .FromApplication("Settlement");
+        services.Configure<IConfiguration>(configuration);
+        services.AddSingleton<IRemotingRefService, RemotingRefService>();
     }
 
     private static void AddConfigRedisCache(this IServiceCollection service, IConfiguration configuration)

@@ -2,8 +2,7 @@
 
 public static class ActionId
 {
-    public const int Cal = 115;
-    public const int CalHt = 118;
-    public const int Refund = 117;
-    public const int RefundFt = 119;
+    public const int HappyFiveCalc = 81000;
+
+    public const int HappyFiveRefund = 81001;
 }

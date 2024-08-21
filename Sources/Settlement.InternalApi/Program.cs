@@ -26,13 +26,15 @@ if (app.Environment.IsDevelopment())
 
 app.MapHealthChecks("/health");
 
-app.UseHttpsRedirection();
-
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 
 app.UseCors("AllowOrigin");
+
+app.UseAuthorization();
 
 app.MapEndpoints();
 

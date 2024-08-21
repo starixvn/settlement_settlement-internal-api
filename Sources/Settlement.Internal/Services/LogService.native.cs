@@ -6,22 +6,25 @@ namespace Settlement.Internal.Services;
 
 public interface LogService
 {
+    Task WriteLog(int matchId, string message, int actionId, int userId, string ip);
+
     Task WriteLog(int matchId, string message, int userId);
 
-    Task WriteLog(string message, int actionId, int userId);
-
     Task WriteLog(InsertLogCriteria criteria);
-
-    Task ActionLog(int matchId, string message, int actionId, int userId);
-
-    Task WriteLog(LogCriteria criteria);
 }
 
 public class LogServiceImp(IDynamicRepository repository) : LogService
 {
-    public async Task ActionLog(int matchId, string message, int actionId, int userId)
+    public async Task WriteLog(int matchId, string message, int actionId, int userId, string ip)
     {
-        var criteria = new LogCriteria(matchId, message, actionId, userId);
+        var criteria = new LogCriteria
+        {
+            MatchId = matchId,
+            Remark = message,
+            UserId = userId,
+            ActionId = actionId,
+            Ip = ip
+        };
         await repository.ExecuteAsync(criteria);
     }
 
@@ -57,16 +60,5 @@ public class LogServiceImp(IDynamicRepository repository) : LogService
         {
             await Log.ErrorAsync("Settlement.WebSites(Write resettle Log): ", e);
         }
-    }
-
-    public async Task WriteLog(string message, int actionId, int userId)
-    {
-        var criteria = new LogCriteria(message, actionId, userId);
-        await repository.ExecuteAsync(criteria);
-    }
-
-    public async Task WriteLog(LogCriteria criteria)
-    {
-        await repository.ExecuteAsync(criteria);
     }
 }

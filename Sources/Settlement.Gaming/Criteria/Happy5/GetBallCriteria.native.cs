@@ -6,13 +6,7 @@ public class GetBallCriteria : CriteriaBase
 {
     public string MatchIds { get; set; }
 
-    public override string GetSettingKey()
-    {
-        return "NAP_Set_MatchSel_BingoBall";
-    }
+    public override string GetSettingKey() => "NAP_Set_MatchSel_BingoBall";
 
-    public override bool IsValid()
-    {
-        return !string.IsNullOrWhiteSpace(MatchIds);
-    }
+    public override bool IsValid() => !string.IsNullOrWhiteSpace(MatchIds);
 }

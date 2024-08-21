@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +11,7 @@
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.5.3" />
     <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
     <PackageReference Include="Fanex.NAP.Client.AspNetCore" Version="2.0.0.13" />
+    <!-- ReSharper disable once VulnerablePackage -->
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.4" />
   </ItemGroup>
 

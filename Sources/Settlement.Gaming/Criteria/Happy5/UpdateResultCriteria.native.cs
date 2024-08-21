@@ -8,7 +8,7 @@ public class UpdateResultCriteria : NonQueryCommand
 
     public string Resources { get; set; }
 
-    public int SportType => 164;
+    public int SportType => Internal.Constants.SportType.Happy5;
 
     public override string GetSettingKey()
     {

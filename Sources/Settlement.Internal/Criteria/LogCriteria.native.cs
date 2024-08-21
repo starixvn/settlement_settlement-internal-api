@@ -28,9 +28,10 @@ public class LogCriteria : NonQueryCommand
     public int? MatchId { get; set; }
 
     public string Remark { get; set; }
+
     public string RemarkJson { get; set; }
 
-    public string Ip => string.Empty;
+    public string Ip { get; set; }
 
     public int ActionId { get; set; }
 

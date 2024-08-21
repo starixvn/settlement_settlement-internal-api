@@ -1,15 +1,15 @@
-﻿using Happy5 = Settlement.Gaming.Services.Happy5;
+﻿using Settlement.Gaming.Services.Happy5;
 
-namespace Settlement.WebSites.Configurations;
+namespace Settlement.InternalApi.Config;
 
 public static class GamingConfig
 {
-    public static void GamingConfigServices(this IServiceCollection services)
+    public static void AddGamingConfigServices(this IServiceCollection services)
     {
-        services.AddTransient<Happy5.MatchService, Happy5.MatchServiceImp>();
-        services.AddTransient<Happy5.BallService, Happy5.BallServiceImp>();
-        services.AddTransient<Happy5.SettlementService, Happy5.SettlementServiceImp>();
-        services.AddTransient<Happy5.LeagueService, Happy5.LeagueServiceImp>();
-        services.AddSingleton<Happy5.PermissionService, Happy5.Happy5PermissionServiceImp>();
+        services.AddTransient<MatchService, MatchServiceImp>();
+        services.AddTransient<BallService, BallServiceImp>();
+        services.AddTransient<SettleService, SettleServiceImp>();
+        services.AddTransient<LeagueService, LeagueServiceImp>();
+        services.AddTransient<ProcessService, ProcessServiceImp>();
     }
 }

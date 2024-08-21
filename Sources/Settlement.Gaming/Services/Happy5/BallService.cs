@@ -2,6 +2,7 @@
 using Settlement.Gaming.Criteria.Happy5;
 using Settlement.Gaming.Models;
 using Settlement.Gaming.Models.Happy5;
+using Settlement.Gaming.Requests;
 
 namespace Settlement.Gaming.Services.Happy5;
 
@@ -13,7 +14,7 @@ public interface BallService
 
     List<BallModel> CorrectNumberBall(int matchId, List<BallModel> balls);
 
-    string ResourcesBalls(List<BallModel> balls);
+    Task UpdateBalls(HappyFiveRequest request);
 }
 
 public class BallServiceImp(IDynamicRepository repository, XmlConvertService xmlConvertService)
@@ -50,6 +51,17 @@ public class BallServiceImp(IDynamicRepository repository, XmlConvertService xml
             var number = currentBall?.NumberBall ?? 0;
             return number;
         }
+    }
+
+    public async Task UpdateBalls(HappyFiveRequest request)
+    {
+        var updateMatchCriteria = new UpdateResultCriteria
+        {
+            MatchId = request.MatchId,
+            Resources = ResourcesBalls(request.Balls)
+        };
+
+        await repository.ExecuteAsync(updateMatchCriteria);
     }
 
     public string ResourcesBalls(List<BallModel> balls)
