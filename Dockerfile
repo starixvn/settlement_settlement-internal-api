@@ -1,19 +1,17 @@
 FROM hub.nexdev.net/base/dotnet/core/sdk:8.0-alpine AS builder
 
 WORKDIR /src
-# COPY Settlement.ExternalApi.sln .
-COPY src/Settlement.External/*.csproj ./src/Settlement.External/
-COPY src/Settlement.ExternalApi/*.csproj ./src/Settlement.ExternalApi/
-
+# COPY Settlement.InternalApi.sln .
+COPY Sources/Settlement.Gaming/*.csproj ./Sources/Settlement.Gaming/
+COPY Sources/Settlement.Internal/*.csproj ./Sources/Settlement.Internal/
+COPY Sources/Settlement.InternalApi/*.csproj ./Sources/Settlement.InternalApi/
 
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
 RUN --mount=type=cache,target=/root/.nuget/packages \
-    dotnet restore ./src/Settlement.ExternalApi/Settlement.ExternalApi.csproj
+    dotnet restore ./Sources/Settlement.InternalApi/Settlement.InternalApi.csproj
 
-COPY src/Settlement.External/. ./src/Settlement.External/
-COPY src/Settlement.ExternalApi/. ./src/Settlement.ExternalApi/
-
-WORKDIR /src/src/Settlement.ExternalApi
+COPY Sources/. ./Sources
+WORKDIR /src/Sources/Settlement.InternalApi
 
 RUN --mount=type=cache,target=/root/.nuget/packages \
 	dotnet publish -c release -o /app
@@ -31,4 +29,4 @@ RUN adduser --disabled-password \
   --gecos '' dotnetuser && chown -R dotnetuser /app
 USER dotnetuser
 
-ENTRYPOINT ["dotnet", "Settlement.ExternalApi.dll"]
+ENTRYPOINT ["dotnet", "Settlement.InternalApi.dll"]

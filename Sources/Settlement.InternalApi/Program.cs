@@ -1,4 +1,7 @@
+using Fanex.Data.SqlServer;
+using Fanex.Logging.Sentry.RavenClient;
 using MinimalApi.Endpoint.Extensions;
+using ONEbook.UM.DependencyInjection;
 using Settlement.Internal.Models;
 using Settlement.InternalApi;
 using Settlement.InternalApi.Config;
@@ -10,9 +13,17 @@ builder.Services.AddEndpoints();
 
 builder.Services.AddHealthChecks();
 
-builder.Services.Configure<AppSettingsKey>(builder.Configuration);
+builder.Services.AddFanexSql(builder.Configuration);
+
+builder.Services.AddOneBookUm(builder.Configuration);
+
+builder.Services.AddFanexLogSentry(builder.Configuration);
+
+builder.Services.AddConfigRedisCache(builder.Configuration);
 
 builder.Services.AddInitialServices(builder.Configuration);
+
+builder.Services.Configure<AppSettingsKey>(builder.Configuration);
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
@@ -32,10 +43,6 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors("AllowOrigin");
-
-app.UseAuthorization();
-
 app.MapEndpoints();
 
-app.Run();
+await app.RunAsync();

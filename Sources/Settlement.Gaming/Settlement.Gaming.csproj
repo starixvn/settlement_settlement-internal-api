@@ -22,22 +22,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.4" />
-    <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.4" />
-    <PackageReference Include="Fanex.Data" Version="4.2.5.3" />
-    <PackageReference Include="Fanex.Data.Repository" Version="4.2.5.3" />
+    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.7" />
+    <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.5" />
+    <PackageReference Include="Fanex.Data" Version="4.3.2" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.3.2" />
     <!-- ReSharper disable once VulnerablePackage -->
-    <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.5.3" />
-    <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
-    <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.1" />
-    <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.8" />
+    <PackageReference Include="Fanex.Data.SqlServer" Version="4.3.2" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.2" />
+    <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.1.0" />
     <!-- ReSharper disable once VulnerablePackage -->
-    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1.2" />
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="2.0.2" />
     <PackageReference Include="Fanex.NAP.Client.AspNetCore" Version="2.0.0.13" />
-    <PackageReference Include="Fanex.RemotingRef" Version="1.5.4" />
-    <PackageReference Include="Fanex.Settlement.Business" Version="1.0.22" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.5.1" />
+    <PackageReference Include="Fanex.Settlement.Business" Version="1.0.23" />
     <PackageReference Include="Fanex.Settlement.Converter" Version="1.0.0.1" />
-    <PackageReference Include="Fanex.Settlement.ScaleOut" Version="1.4.2" />
+    <PackageReference Include="Fanex.Settlement.ScaleOut" Version="1.4.6.1" />
   </ItemGroup>
 
   <ItemGroup>
