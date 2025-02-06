@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Controllers\**" />
     <Compile Remove="Handlers\**" />
@@ -20,7 +18,6 @@
     <None Remove="Models\NumberGame\**" />
     <None Remove="Services\NumberGame\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.7" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.5" />
@@ -39,9 +36,7 @@
     <PackageReference Include="Fanex.Settlement.Converter" Version="1.0.0.1" />
     <PackageReference Include="Fanex.Settlement.ScaleOut" Version="1.4.6.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />
   </ItemGroup>
-
 </Project>
