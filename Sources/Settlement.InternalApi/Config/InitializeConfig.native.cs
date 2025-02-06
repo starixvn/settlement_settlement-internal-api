@@ -22,6 +22,7 @@ public static class InitializeConfig
         services.AddCoreServices(configuration);
         services.AddGamingConfigServices();
         services.AddInitializeBusinessServices();
+        services.AddEventManagementServices();
 
         return services;
     }

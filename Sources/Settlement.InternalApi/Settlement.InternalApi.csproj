@@ -22,6 +22,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Settlement.EventManagement\Settlement.EventManagement.csproj" />
     <ProjectReference Include="..\Settlement.Gaming\Settlement.Gaming.csproj" />
     <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />
   </ItemGroup>

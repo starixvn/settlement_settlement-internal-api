@@ -1,0 +1,62 @@
+﻿namespace Settlement.EventManagement.Models;
+
+public class SiteMatch
+{
+    public bool IsExistResultAndFirstTeamScore { get; set; }
+
+    public bool IsExistFgNg { get; set; }
+
+    public bool IsExistHtFgLg { get; set; }
+
+    public bool IsExistFgLg { get; set; }
+
+    public bool IsLive { get; set; }
+
+    public bool IsEnabledGoalRecordHt { get; set; }
+
+    public bool IsEnabledGoalRecordFt { get; set; }
+
+    public int? IsCalculatingSingle { get; set; }
+
+    public int? IsCalculatingMP { get; set; }
+
+    public bool IsExistMarkedTicket { get; set; }
+
+    public bool IsExistRunningTicket { get; set; }
+
+    public bool IsExistEarlyBetTypes { get; set; }
+
+    public bool IsRunningEarlyBetTypes { get; set; }
+
+    public bool IsWaitingEarlyBetTypes { get; set; }
+
+    public bool IsExistFastMarket { get; set; }
+
+    public bool IsExistFastMarketResult { get; set; }
+
+    public bool IsRunningFastMarket { get; set; }
+
+    public bool IsExistsConfirmedEarly { get; set; }
+
+    private const string Dash = "-";
+
+    private string suspenderHalfTime = string.Empty;
+
+    private string suspenderFullTime = string.Empty;
+
+    public string SuspenderHalfTime
+    {
+        get => string.IsNullOrEmpty(suspenderHalfTime) ? Dash : suspenderHalfTime;
+
+        set => suspenderHalfTime = value;
+    }
+
+    public string SuspenderFullTime
+    {
+        get => string.IsNullOrEmpty(suspenderFullTime) ? Dash : suspenderFullTime;
+
+        set => suspenderFullTime = value;
+    }
+
+    public int MatchId { get; set; }
+}
