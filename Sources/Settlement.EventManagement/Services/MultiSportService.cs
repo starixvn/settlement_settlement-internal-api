@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Settlement.EventManagement.Criteria;
 using Settlement.Internal.Constants;
@@ -19,7 +18,6 @@ public interface MultiSportService
 public class MultiSportServiceImp(
     IDynamicRepository repository,
     MatchService matchService,
-    IMapper mapper,
     IMemoryCache cacheService,
     IOptions<AppSettingsKey> appSettingsKey)
     : MultiSportService

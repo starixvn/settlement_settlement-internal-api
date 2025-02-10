@@ -17,8 +17,6 @@ public interface NewInfoMatchService
 
     string ConfirmScore(List<ResultDetail> listResultDetail, string resource);
 
-    bool IsExistsConfirmedEarly(Match match);
-
     Task<List<Match>> GetAutoSetting(List<Match> matches);
 }
 
@@ -85,11 +83,6 @@ public class NewInfoMatchServiceImp(
         return resultDetail != null
             ? $"({resultDetail.SourceName}: {resultDetail.HomeValue}-{resultDetail.AwayValue})"
             : string.Empty;
-    }
-
-    public bool IsExistsConfirmedEarly(Match match)
-    {
-        return siteMatchService.IsExistsConfirmedEarly(match);
     }
 
     public async Task<List<Match>> GetAutoSetting(List<Match> matches)

@@ -11,8 +11,6 @@ public interface SiteMatchService
     string GetBackgroundCompletedStatus(Match match);
 
     string EarlySettlementStatus(Match match);
-
-    bool IsExistsConfirmedEarly(Match match);
 }
 
 public class SiteMatchServiceImp : SiteMatchService
@@ -21,18 +19,6 @@ public class SiteMatchServiceImp : SiteMatchService
     {
         var isExistMarkedTicketOnSite = match.SiteMatch.Exists(m => m.IsExistMarkedTicket);
         return match.IsExistMarkedTicket || isExistMarkedTicketOnSite;
-    }
-
-    public bool IsExistRunningTickets(Match match)
-    {
-        var isExistRunningTicketOnSite = match.SiteMatch.Exists(m => m.IsExistRunningTicket);
-        return match.IsExistRunningTicket || isExistRunningTicketOnSite;
-    }
-
-    public bool IsExistsConfirmedEarly(Match match)
-    {
-        var isExistsConfirmedEarly = match.SiteMatch.Exists(m => m.IsExistsConfirmedEarly);
-        return match.IsExistsConfirmedEarly || isExistsConfirmedEarly;
     }
 
     public string GetBackgroundCompletedStatus(Match match)
@@ -60,6 +46,12 @@ public class SiteMatchServiceImp : SiteMatchService
     private static bool IsExistedRunningEarlyBetTypes(Match match)
     {
         return match.IsRunningEarlyBetTypes || match.SiteMatch.Exists(m => m.IsRunningEarlyBetTypes);
+    }
+
+    private static bool IsExistRunningTickets(Match match)
+    {
+        var isExistRunningTicketOnSite = match.SiteMatch.Exists(m => m.IsExistRunningTicket);
+        return match.IsExistRunningTicket || isExistRunningTicketOnSite;
     }
 
     private string GetBackgroundRunningTicket(Match match)

@@ -2,11 +2,11 @@
 
 public class AutoCalculationSetting
 {
-    private const int DirectPayoutBit = 4;
-
     private const int ConvertToBase = 2;
 
-    private const int MultiSportAutoPayoutBit = 5;
+    private const int DirectPayoutBit = 4;
+
+    private const int EarlyPayoutBit = 5;
 
     public AutoCalculationSetting()
     {
@@ -40,8 +40,6 @@ public class AutoCalculationSetting
 
     public bool IsDirectPayoutForMatch => !string.IsNullOrWhiteSpace(MatchSetting) && MatchSetting.Length > DirectPayoutBit && MatchSetting[DirectPayoutBit].Equals('1');
 
-    public bool IsAutoPayoutForMultiSportMatch => !string.IsNullOrWhiteSpace(MatchSetting) && MatchSetting.Length > MultiSportAutoPayoutBit && MatchSetting[MultiSportAutoPayoutBit].Equals('1');
-
     public bool IsInstantForMatch => !string.IsNullOrWhiteSpace(MatchSetting) && MatchSetting.Length > 1 && MatchSetting[1].Equals('1');
 
     public string LeagueSetting { get; set; }
@@ -66,8 +64,9 @@ public class AutoCalculationSetting
 
     public bool IsDirectPayoutForLeague => !string.IsNullOrWhiteSpace(LeagueSetting) && LeagueSetting.Length > DirectPayoutBit && LeagueSetting[DirectPayoutBit].Equals('1');
 
-    public bool IsAutoPayoutForMultiSportLeague
-        => !string.IsNullOrWhiteSpace(LeagueSetting) && LeagueSetting.Length > MultiSportAutoPayoutBit && LeagueSetting[MultiSportAutoPayoutBit].Equals('1');
-
     public bool IsInstantForLeague => !string.IsNullOrWhiteSpace(LeagueSetting) && LeagueSetting.Length > 1 && LeagueSetting[1].Equals('1');
+
+    public bool IsEarlyPayoutForMatch => !string.IsNullOrWhiteSpace(MatchSetting) && MatchSetting.Length > EarlyPayoutBit && MatchSetting[EarlyPayoutBit].Equals('1');
+
+    public bool IsEarlyPayoutForLeague => !string.IsNullOrWhiteSpace(LeagueSetting) && LeagueSetting.Length > EarlyPayoutBit && LeagueSetting[EarlyPayoutBit].Equals('1');
 }

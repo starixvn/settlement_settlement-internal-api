@@ -30,7 +30,6 @@ public class MatchServiceImp(
             match.EarlySettleStatus = newInfoMatchService.EarlySettlementStatus(match);
             match.ConfirmHalfTimeScore = newInfoMatchService.ConfirmScore(listSourceByMatchId, ResourceType.Halftime);
             match.ConfirmFullTimeScore = newInfoMatchService.ConfirmScore(listSourceByMatchId, ResourceType.Final);
-            match.IsExistsConfirmedEarly = newInfoMatchService.IsExistsConfirmedEarly(match);
         }
 
         return await newInfoMatchService.GetAutoSetting(matches);

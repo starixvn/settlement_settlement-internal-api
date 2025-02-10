@@ -22,8 +22,7 @@ public class CompareMatchServiceImp : CompareMatchService
                 IsExistRunningTicket = siteMatch.IsExistRunningTicket,
                 IsExistEarlyBetTypes = siteMatch.IsExistEarlyBetTypes,
                 IsRunningEarlyBetTypes = siteMatch.IsRunningEarlyBetTypes,
-                IsWaitingEarlyBetTypes = siteMatch.IsWaitingEarlyBetTypes,
-                IsExistsConfirmedEarly = siteMatch.IsExistsConfirmedEarly
+                IsWaitingEarlyBetTypes = siteMatch.IsWaitingEarlyBetTypes
             };
         }
 
