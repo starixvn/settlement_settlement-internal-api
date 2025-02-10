@@ -2,10 +2,7 @@
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Fanex.Logging;
-using Fanex.NAP.Client.Configuration;
-using Fanex.NAP.Client.Helpers.Web;
 using Fanex.NAP.Client.Services;
-using Fanex.NAP.Client.Session;
 using Fanex.RemotingRef;
 using Fanex.Settlement.Converter.Services;
 using Fanex.Settlement.ScaleOut.Services;
@@ -31,9 +28,6 @@ public static class InitializeConfig
 
     private static void AddCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<INapSettings>(new NapSettings(configuration));
-        services.AddSingleton<INapSession, NapSession>();
-        services.AddSingleton<ICacheService, CacheService>();
         services.AddSingleton<IUserService, UserService>();
         services.AddSingleton<ISecurityService, SecurityService>();
 
@@ -42,7 +36,6 @@ public static class InitializeConfig
         services.AddTransient<IDynamicRepository, DynamicRepository>();
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
         services.AddTransient<IRefDataService, RefDataService>();
-        services.AddSingleton<PermissionService, PermissionServiceImp>();
         services.AddSingleton<XmlConvertService, XmlConvertServiceImp>();
         services.AddTransient<Internal.Services.LogService, LogServiceImp>();
 
