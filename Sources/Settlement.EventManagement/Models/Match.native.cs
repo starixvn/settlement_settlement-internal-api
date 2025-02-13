@@ -110,6 +110,9 @@ public class Match
     public bool IsExistEarlyBetTypes { get; set; }
 
     [IgnoreMember]
+    public bool IsOpenOdds { get; set; }
+
+    [IgnoreMember]
     public int SportType { get; set; }
 
     [IgnoreMember]
@@ -123,6 +126,9 @@ public class Match
 
     [IgnoreMember]
     public int BestOfMap { get; set; }
+
+    [IgnoreMember]
+    public int ChildMatchType { get; set; }
 
     public override bool Equals(object obj)
     {

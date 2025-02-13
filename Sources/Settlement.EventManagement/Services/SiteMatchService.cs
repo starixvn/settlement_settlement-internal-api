@@ -15,6 +15,8 @@ public interface SiteMatchService
 
 public class SiteMatchServiceImp : SiteMatchService
 {
+    private const int MatchPen = 202;
+
     public bool IsExistMarkedTickets(Match match)
     {
         var isExistMarkedTicketOnSite = match.SiteMatch.Exists(m => m.IsExistMarkedTicket);
@@ -30,12 +32,25 @@ public class SiteMatchServiceImp : SiteMatchService
 
     public string EarlySettlementStatus(Match match)
     {
+        if (IsNotExistedEarlyBetTypes(match))
+        {
+            return match.ChildMatchType == MatchPen || match.IsOpenOdds ? TicketStatus.NoTicket : TicketStatus.Normal;
+        }
+
         if (IsExistedRunningEarlyBetTypes(match))
         {
             return TicketStatus.Running;
         }
 
         return IsExistedWaitingEarlyBetTypes(match) ? TicketStatus.Waiting : TicketStatus.Completed;
+    }
+
+    private static bool IsNotExistedEarlyBetTypes(Match match)
+    {
+        var matchSite = match.SiteMatch;
+        var isExistEarlyBetTypes = match.IsExistEarlyBetTypes || matchSite.Exists(m => m.IsExistEarlyBetTypes);
+
+        return !isExistEarlyBetTypes;
     }
 
     private static bool IsExistedWaitingEarlyBetTypes(Match match)
