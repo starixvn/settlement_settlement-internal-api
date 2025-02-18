@@ -8,6 +8,8 @@
 		<Setting Key="NAP_Set_Happy5_Result_Sel" SpName="NAP_Set_Happy5_Result_Sel" DbName="DBPRO.bodb02.wsv_nap" />
 		<Setting Key="NAP_Admin_Match_Update" SpName="NAP_Admin_Match_Update" DbName="DBPRO.bodb02.wsv_nap" />
 		<Setting Key="NAP_Admin_Result_Update_BingoBall" SpName="NAP_Admin_Result_Update_BingoBall" DbName="DBPRO.bodb02.wsv_nap" />
+		<Setting Key="NAP_Set_AutoPayoutStatus_Sel" SpName="NAP_Set_AutoPayoutStatus_Sel" DbName="DBPRO.bodb02.wsv_nap" />
+		<Setting Key="NAP_Set_ResultDetailSel" SpName="NAP_Set_ResultDetailSel" DbName="DBPRO.bodb02.wsv_nap" />
 	</Function>
 
 	<Function Name="DBLOG">
@@ -24,6 +26,15 @@
 
 	<Function Name="DBUserLog">
 		<Setting Key="NAP_UserLog_WriteLogPreSettlement" SpName="NAP_UserLog_WriteLogPreSettlement" DbName="DBUserLog.LogTDB.wsv_nap" />
+	</Function>
+
+	<Function Name="Scale Out DB">
+		<Function Name="NAP_Set_WaitingOtherSportSel">
+			<Setting Key="NAP_Set_WaitingOtherSportSel_DBTXN" SpName="NAP_Set_WaitingOtherSportSel" DbName="DBTXN.bodb02.wsv_nap" />
+			<Setting Key="NAP_Set_WaitingOtherSportSel_DBSITE01" SpName="NAP_Set_WaitingOtherSportSel" DbName="DBSITE01.bodb02.wsv_nap" />
+			<Setting Key="NAP_Set_WaitingOtherSportSel_DBSITE02" SpName="NAP_Set_WaitingOtherSportSel" DbName="DBSITE02.bodb02.wsv_nap" />
+			<Setting Key="NAP_Set_WaitingOtherSportSel_DBSITE03" SpName="NAP_Set_WaitingOtherSportSel" DbName="DBSITE03.bodb02.wsv_nap" />
+		</Function>
 	</Function>
 
 	<Function Name="Transfer the logic business to Application Layer">

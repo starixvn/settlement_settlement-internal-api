@@ -9,8 +9,6 @@ public interface LogService
     Task WriteLog(int matchId, string message, int actionId, int userId, string ip);
 
     Task WriteLog(int matchId, string message, int userId);
-
-    Task WriteLog(InsertLogCriteria criteria);
 }
 
 public class LogServiceImp(IDynamicRepository repository) : LogService
@@ -44,21 +42,6 @@ public class LogServiceImp(IDynamicRepository repository) : LogService
         catch (Exception e)
         {
             await Log.ErrorAsync("Settlement.WebSites(Write Log Directly): ", e);
-        }
-    }
-
-    public async Task WriteLog(InsertLogCriteria criteria)
-    {
-        try
-        {
-            if (!criteria.IsHedgeMatch)
-            {
-                await repository.ExecuteAsync(criteria);
-            }
-        }
-        catch (Exception e)
-        {
-            await Log.ErrorAsync("Settlement.WebSites(Write resettle Log): ", e);
         }
     }
 }

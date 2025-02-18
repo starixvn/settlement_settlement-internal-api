@@ -1,0 +1,86 @@
+﻿using Settlement.EventManagement.Constants;
+
+namespace Settlement.EventManagement.Services;
+
+using Models;
+
+public interface SiteMatchService
+{
+    bool IsExistMarkedTickets(Match match);
+
+    string GetBackgroundCompletedStatus(Match match);
+
+    string EarlySettlementStatus(Match match);
+}
+
+public class SiteMatchServiceImp : SiteMatchService
+{
+    private const int MatchPen = 202;
+
+    public bool IsExistMarkedTickets(Match match)
+    {
+        var isExistMarkedTicketOnSite = match.SiteMatch.Exists(m => m.IsExistMarkedTicket);
+        return match.IsExistMarkedTicket || isExistMarkedTicketOnSite;
+    }
+
+    public string GetBackgroundCompletedStatus(Match match)
+    {
+        return IsOnlyMarkedTicket(match)
+            ? Background.WhiteBlinking
+            : GetBackgroundRunningTicket(match);
+    }
+
+    public string EarlySettlementStatus(Match match)
+    {
+        if (IsNotExistedEarlyBetTypes(match))
+        {
+            return match.ChildMatchType == MatchPen || match.IsOpenOdds ? TicketStatus.NoTicket : TicketStatus.Normal;
+        }
+
+        if (IsExistedRunningEarlyBetTypes(match))
+        {
+            return TicketStatus.Running;
+        }
+
+        return IsExistedWaitingEarlyBetTypes(match) ? TicketStatus.Waiting : TicketStatus.Completed;
+    }
+
+    private static bool IsNotExistedEarlyBetTypes(Match match)
+    {
+        var matchSite = match.SiteMatch;
+        var isExistEarlyBetTypes = match.IsExistEarlyBetTypes || matchSite.Exists(m => m.IsExistEarlyBetTypes);
+
+        return !isExistEarlyBetTypes;
+    }
+
+    private static bool IsExistedWaitingEarlyBetTypes(Match match)
+    {
+        return match.IsWaitingEarlyBetTypes || match.SiteMatch.Exists(m => m.IsWaitingEarlyBetTypes);
+    }
+
+    private static bool IsExistedRunningEarlyBetTypes(Match match)
+    {
+        return match.IsRunningEarlyBetTypes || match.SiteMatch.Exists(m => m.IsRunningEarlyBetTypes);
+    }
+
+    private static bool IsExistRunningTickets(Match match)
+    {
+        var isExistRunningTicketOnSite = match.SiteMatch.Exists(m => m.IsExistRunningTicket);
+        return match.IsExistRunningTicket || isExistRunningTicketOnSite;
+    }
+
+    private string GetBackgroundRunningTicket(Match match)
+    {
+        if (IsExistMarkedTickets(match))
+        {
+            return Background.PinkBlinking;
+        }
+
+        return IsExistRunningTickets(match) ? Background.Pink : string.Empty;
+    }
+
+    private bool IsOnlyMarkedTicket(Match match)
+    {
+        return IsExistMarkedTickets(match) && !IsExistRunningTickets(match);
+    }
+}

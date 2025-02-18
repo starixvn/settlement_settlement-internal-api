@@ -19,6 +19,7 @@
     <None Remove="Services\NumberGame\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.7" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.5" />
     <PackageReference Include="Fanex.Data" Version="4.3.2" />
