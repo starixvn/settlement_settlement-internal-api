@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement.Internal", "Sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement.EventManagement", "Sources\Settlement.EventManagement\Settlement.EventManagement.csproj", "{C61C98EF-FBBB-4DB5-AF15-9B4A82F817D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement.EventManagement.UnitTests", "Tests\Settlement.EventManagement.UnitTests\Settlement.EventManagement.UnitTests.csproj", "{22B119BB-7974-43B9-924E-8A442CF4407E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{C61C98EF-FBBB-4DB5-AF15-9B4A82F817D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C61C98EF-FBBB-4DB5-AF15-9B4A82F817D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C61C98EF-FBBB-4DB5-AF15-9B4A82F817D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B119BB-7974-43B9-924E-8A442CF4407E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B119BB-7974-43B9-924E-8A442CF4407E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B119BB-7974-43B9-924E-8A442CF4407E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B119BB-7974-43B9-924E-8A442CF4407E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{DAB53FED-AB6C-4ABA-BC4C-36DC917E628A} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
 		{594A2E25-6472-46B9-A1B4-6994550087FF} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
 		{C61C98EF-FBBB-4DB5-AF15-9B4A82F817D7} = {4EBC89A6-9B96-40F3-AC5D-B4448272DCB1}
+		{22B119BB-7974-43B9-924E-8A442CF4407E} = {78F98D00-A6E2-43A8-89D8-72111E8F7B7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FED1FFD3-63AC-438E-84B6-EEE2BD5DD1B0}
