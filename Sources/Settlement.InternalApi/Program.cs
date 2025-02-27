@@ -15,7 +15,7 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddFanexSql(builder.Configuration);
 
-builder.Services.AddOneBookUm(builder.Configuration);
+builder.Services.AddOneBookUmForWeb(builder.Configuration);
 
 builder.Services.AddFanexLogSentry(builder.Configuration);
 

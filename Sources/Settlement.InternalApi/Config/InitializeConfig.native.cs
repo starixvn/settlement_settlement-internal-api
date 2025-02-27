@@ -6,6 +6,8 @@ using Fanex.NAP.Client.Services;
 using Fanex.RemotingRef;
 using Fanex.Settlement.Converter.Services;
 using Fanex.Settlement.ScaleOut.Services;
+using Settlement.Business;
+using Settlement.Business.Data;
 using Settlement.Internal.Services;
 using StackExchange.Redis;
 using ILogger = Fanex.Logging.ILogger;
@@ -21,7 +23,8 @@ public static class InitializeConfig
 
         services.AddCoreServices(configuration);
         services.AddGamingConfigServices();
-        services.AddInitializeBusinessServices();
+        services.AddSettlementBusinessServices();
+        services.AddSettlementBusinessDataServices();
         services.AddEventManagementServices();
 
         return services;
