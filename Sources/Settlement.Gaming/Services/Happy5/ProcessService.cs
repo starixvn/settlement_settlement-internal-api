@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Settlement.Business.Core.Constants;
-using Settlement.Business.Requests;
+using Settlement.Business.Core.Requests;
 using Settlement.Gaming.Requests;
 using BusinessModels = Settlement.Business.Core.Models;
-using BusinessServices = Settlement.Business.Services;
+using BusinessServices = Settlement.Business.Data.Services;
 
 namespace Settlement.Gaming.Services.Happy5;
 
