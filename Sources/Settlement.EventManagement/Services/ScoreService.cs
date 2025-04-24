@@ -12,6 +12,8 @@ public interface ScoreService
     Score HalftimeScore(int sportType, List<ResultDetail> resultDetails, bool isLeader);
 
     Score FinalScore(int sportType, List<ResultDetail> resultDetails, bool isLeader);
+
+    string VerifyScoreMercy(int sportType, List<ResultDetail> resultDetails);
 }
 
 public class ScoreServiceImp(ScoreSetService scoreSetService) : ScoreService
@@ -55,6 +57,18 @@ public class ScoreServiceImp(ScoreSetService scoreSetService) : ScoreService
             ClearScore(sportType, resultDetails, ResourceType.Final);
         }
         return ScoreByResource(resultDetails, ResourceType.Final, isLeader);
+    }
+
+    public string VerifyScoreMercy(int sportType, List<ResultDetail> resultDetails)
+    {
+        if (sportType != SportType.BaseBall)
+        {
+            return string.Empty;
+        }
+
+        var resultImpacted = resultDetails.Find(r => !string.IsNullOrEmpty(r.OtherInfo));
+
+        return resultImpacted != null ? $"{resultImpacted.ResourceId}:{resultImpacted.OtherInfo}" : string.Empty;
     }
 
     private static void ClearScore(int sportType, List<ResultDetail> resultDetails, string resourceId)
