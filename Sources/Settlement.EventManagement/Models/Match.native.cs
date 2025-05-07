@@ -66,6 +66,8 @@ public class Match
 
     public bool IsRefund { get; set; }
 
+    public string MercyAbandonedInfo { get; set; }
+
     public string SuspenderHalfTime
 
     {
