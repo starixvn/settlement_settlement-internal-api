@@ -90,8 +90,11 @@ public class Match
         set
         {
             eventStatus = value;
+            OriginalEventStatus ??= value;
         }
     }
+
+    public string OriginalEventStatus { get; set; }
 
     public RemarkSetting Remark => new(SettlementStatus);
 
