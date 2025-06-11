@@ -35,6 +35,8 @@ public class Score
 
     public bool IsNotSettled { get; set; }
 
+    public bool IsSettled { get; set; }
+
     public bool EqualValue(Score score)
     {
         return Home == score.Home && Away == score.Away;
