@@ -87,23 +87,33 @@ public class NewInfoMatchServiceImp(
 
     public async Task<List<Match>> GetAutoSetting(List<Match> matches)
     {
-        var matchStatuses = (await GetMatchStatus(matches)).ToList();
-        return matches.Join(matchStatuses, m => m.MatchId, s => s.MatchId, (m, s) =>
+        var (matchStatuses, failedAutoResources) = (await GetAutoPayoutStatus(matches));
+        var result = matches.Join(matchStatuses, m => m.MatchId, s => s.MatchId, (m, s) =>
         {
             m.AutoPayoutStatus = s.AutoPayoutStatus;
             m.AutoInstantStatus = s.InstantStatus;
             return m;
         }).ToList();
+
+        result.ForEach(m =>
+        {
+            m.FailedAutoResources = [.. failedAutoResources.Where(x => x.MatchId == m.MatchId)];
+        });
+
+        return [.. result];
     }
 
-    private async Task<IEnumerable<MatchStatusModel>> GetMatchStatus(IEnumerable<Match> matches)
+    public async Task<(IEnumerable<MatchStatusModel>, IEnumerable<FailedAutoResource>)> GetAutoPayoutStatus(List<Match> matches)
     {
-        var matchIds = string.Join(',', matches.Select(m => m.MatchId));
+        var matchIds = string.Join(',', matches.Select(x => x.MatchId));
         var criteria = new GetAutoStatusCriteria
         {
             MatchIds = matchIds
         };
 
-        return await repository.FetchAsync<MatchStatusModel>(criteria);
+        var result = await repository.FetchMultipleAsync<MatchStatusModel, FailedAutoResource>(criteria);
+
+        return result;
+
     }
 }
