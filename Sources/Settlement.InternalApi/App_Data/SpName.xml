@@ -8,7 +8,7 @@
 		<Setting Key="NAP_Set_Happy5_Result_Sel" SpName="NAP_Set_Happy5_Result_Sel" DbName="DBPRO.bodb02.wsv_nap" />
 		<Setting Key="NAP_Admin_Match_Update" SpName="NAP_Admin_Match_Update" DbName="DBPRO.bodb02.wsv_nap" />
 		<Setting Key="NAP_Admin_Result_Update_BingoBall" SpName="NAP_Admin_Result_Update_BingoBall" DbName="DBPRO.bodb02.wsv_nap" />
-		<Setting Key="NAP_Set_AutoPayoutStatus_Sel" SpName="NAP_Set_AutoPayoutStatus_Sel_xpre" DbName="DBPRO.bodb02.wsv_nap" />
+		<Setting Key="NAP_Set_AutoPayoutStatus_Sel" SpName="NAP_Set_AutoPayoutStatus_Sel" DbName="DBPRO.bodb02.wsv_nap" />
 		<Setting Key="NAP_Set_ResultDetailSel" SpName="NAP_Set_ResultDetailSel" DbName="DBPRO.bodb02.wsv_nap" />
 	</Function>
 
