@@ -102,6 +102,11 @@ public class Match
 
     public AutoCalculationSetting AutoCalcSetting => new(AutoSetting, AutoSettingForLeague);
 
+    public List<string> FailedAutoResourcesIds => [.. FailedAutoResources.Select(x => x.ResourceId)];
+
+    [IgnoreMember]
+    public List<FailedAutoResource> FailedAutoResources { get; set; } = [];
+
     [IgnoreMember]
     public List<SiteMatch> SiteMatch { get; set; } = [];
 
