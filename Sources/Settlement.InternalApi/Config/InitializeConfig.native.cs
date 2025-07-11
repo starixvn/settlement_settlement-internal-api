@@ -2,7 +2,6 @@
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Fanex.Logging;
-using Fanex.NAP.Client.Services;
 using Fanex.RemotingRef;
 using Fanex.Settlement.Converter.Services;
 using Fanex.Settlement.ScaleOut.Services;
@@ -32,9 +31,6 @@ public static class InitializeConfig
 
     private static void AddCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IUserService, UserService>();
-        services.AddSingleton<ISecurityService, SecurityService>();
-
         services.AddTransient<ILogger, Logger>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddTransient<IDynamicRepository, DynamicRepository>();

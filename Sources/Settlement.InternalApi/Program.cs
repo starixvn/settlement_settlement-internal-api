@@ -9,23 +9,25 @@ using Settlement.InternalApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpoints();
+var services = builder.Services;
 
-builder.Services.AddHealthChecks();
+services.AddEndpoints();
 
-builder.Services.AddFanexSql(builder.Configuration);
+services.AddHealthChecks();
 
-builder.Services.AddOneBookUmForWeb(builder.Configuration);
+services.AddFanexSql(builder.Configuration);
 
-builder.Services.AddFanexLogSentry(builder.Configuration);
+services.AddOneBookUmForService(builder.Configuration);
 
-builder.Services.AddConfigRedisCache(builder.Configuration);
+services.AddFanexLogSentry(builder.Configuration);
 
-builder.Services.AddInitialServices(builder.Configuration);
+services.AddConfigRedisCache(builder.Configuration);
 
-builder.Services.Configure<AppSettingsKey>(builder.Configuration);
+services.AddInitialServices(builder.Configuration);
 
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+services.Configure<AppSettingsKey>(builder.Configuration);
+
+services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 var app = builder.Build();
 
@@ -35,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/healthz");
 
 app.UseMiddleware<ExceptionMiddleware>();
 
