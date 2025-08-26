@@ -1,5 +1,4 @@
 ﻿using Settlement.EventManagement.Services;
-using Settlement.EventManagement.Services.MultiSports;
 
 namespace Settlement.InternalApi.Config;
 

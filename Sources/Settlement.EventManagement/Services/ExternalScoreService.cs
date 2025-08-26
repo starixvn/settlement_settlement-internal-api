@@ -1,8 +1,8 @@
 ﻿using Settlement.EventManagement.Models;
-using Settlement.EventManagement.Services.MultiSports;
 using Settlement.Internal.Constants;
 
 namespace Settlement.EventManagement.Services;
+using MappedScore = (ResultDetail ExternalResult, string Round);
 
 public interface ExternalScoreService
 {
@@ -13,159 +13,167 @@ public interface ExternalScoreService
 
 public class ExternalScoreServiceImp(MuayThaiHelperService muayThaiHelperService) : ExternalScoreService
 {
+    private const string SuspenderDefaultValue = "-";
+    private const string EmptyString = "";
+
     public bool IsInconsistentFullTimeScore(int matchId, string userConfirmation, List<ResultDetail> resultDetails)
     {
-        var externalResultDetails = GetExternalResults(matchId, resultDetails);
-        var finalExternalResult = FindFinalResult(externalResultDetails);
+        var externalResultDetails = GetSboResults(matchId, resultDetails);
+        var finalExternalResult = FindResultByResourceType(externalResultDetails, ResourceType.Final);
 
         if (finalExternalResult == null)
         {
             return false;
         }
 
-        var currentResult = FindCurrentResult(matchId, resultDetails, finalExternalResult.ResourceId);
+        var currentResult = FindCurrentResult(resultDetails, matchId, finalExternalResult.ResourceId);
         return AreScoresDifferent(currentResult, finalExternalResult, userConfirmation);
     }
 
     public bool IsInconsistentFullTimeScore(Match match, IEnumerable<ResultDetail> resultDetails)
     {
-        var externalResultDetails = GetExternalResults(match.MatchId, resultDetails);
-        var finalExternalResult = FindFinalResult(externalResultDetails);
+        var externalResultDetails = GetSboResults(match.MatchId, resultDetails);
+        var finalExternalResult = FindResultByResourceType(externalResultDetails, ResourceType.Final);
 
         if (finalExternalResult == null)
         {
             return false;
         }
 
-        if (HasNoFinalScores(match))
+        if (HasNoScores(match.FinalHomeScore, match.FinalAwayScore))
         {
-            return IsMatchSuspended(match.SuspenderFullTime);
+            return !string.Equals(match.SuspenderFullTime, SuspenderDefaultValue);
         }
 
-        var mappedExternalResult = MapExternalScoreForSport(match.SportType, finalExternalResult);
-        return AreScoresInconsistent(match.FinalHomeScore, match.FinalAwayScore, mappedExternalResult);
+        var mappedScore = MapSboScore(match.SportType, finalExternalResult);
+        return AreScoresInconsistent(match, mappedScore);
     }
 
     public bool IsInconsistentHalftimeScore(Match match, IEnumerable<ResultDetail> resultDetails)
     {
-        var externalResultDetails = GetExternalResults(match.MatchId, resultDetails);
-        var halftimeExternalResult = FindHalftimeResult(externalResultDetails);
+        var externalResultDetails = GetSboResults(match.MatchId, resultDetails);
+        var halftimeExternalResult = FindResultByResourceType(externalResultDetails, ResourceType.Halftime);
 
         if (halftimeExternalResult == null)
         {
             return false;
         }
 
-        if (HasNoHalftimeScores(match))
+        if (HasNoScores(match.HalfTimeHomeScore, match.HalfTimeAwayScore))
         {
-            return IsMatchSuspended(match.SuspenderHalfTime);
+            return !string.Equals(match.SuspenderHalfTime, SuspenderDefaultValue);
         }
 
         return AreScoresInconsistent(match.HalfTimeHomeScore, match.HalfTimeAwayScore, halftimeExternalResult);
     }
 
-    private static ResultDetail FindFinalResult(List<ResultDetail> externalResults)
+    private static bool AreScoresInconsistent(Match match, MappedScore mappedScore)
     {
-        return externalResults.Find(result => result.ResourceId == ResourceType.Final);
+        var homeScoreConsistent = AreScoresEqual(match.FinalHomeScore.ToString(), mappedScore.ExternalResult.HomeValue);
+        var awayScoreConsistent = AreScoresEqual(match.FinalAwayScore.ToString(), mappedScore.ExternalResult.AwayValue);
+        var betStatusConsistent = AreBetStatusesEqual(match.BetStatus, mappedScore.Round);
+
+        return !homeScoreConsistent || !awayScoreConsistent || !betStatusConsistent;
     }
 
-    private static ResultDetail FindHalftimeResult(List<ResultDetail> externalResults)
+    private static bool AreScoresInconsistent(int? homeScore, int? awayScore, ResultDetail externalResult)
     {
-        return externalResults.Find(result => result.ResourceId == ResourceType.Halftime);
+        var homeScoreConsistent = AreScoresEqual(homeScore.ToString(), externalResult.HomeValue);
+        var awayScoreConsistent = AreScoresEqual(awayScore.ToString(), externalResult.AwayValue);
+
+        return !homeScoreConsistent || !awayScoreConsistent;
     }
 
-    private static ResultDetail FindCurrentResult(int matchId, List<ResultDetail> resultDetails, string resourceId)
+    private static bool AreBetStatusesEqual(string matchBetStatus, string externalRound)
     {
-        return resultDetails.Find(result =>
-            result.MatchId == matchId &&
-            result.SourceId == SourceType.Normal &&
-            result.ResourceId == resourceId);
+        var normalizedBetStatus = string.IsNullOrWhiteSpace(matchBetStatus) ? EmptyString : matchBetStatus;
+        return string.Equals(normalizedBetStatus, externalRound);
     }
 
-    private ResultDetail MapExternalScoreForSport(int sportType, ResultDetail externalResult)
+    private MappedScore MapSboScore(int sportType, ResultDetail finalExternalResult)
     {
+        var round = EmptyString;
+
         if (sportType == SportType.MuayThai)
         {
-            return MapMuayThaiScore(externalResult);
+            var mappedResult = MapMuayThaiScores(finalExternalResult);
+            if (mappedResult.HasValue)
+            {
+                var (mappedHome, mappedAway, mappedRound) = mappedResult.Value;
+                finalExternalResult.HomeValue = mappedHome;
+                finalExternalResult.AwayValue = mappedAway;
+                round = mappedRound;
+            }
         }
 
-        return externalResult;
+        return (finalExternalResult, round);
     }
 
-    private ResultDetail MapMuayThaiScore(ResultDetail externalResult)
+    private (string Home, string Away, string Round)? MapMuayThaiScores(ResultDetail finalExternalResult)
     {
-        if (int.TryParse(externalResult.HomeValue, out var homeValue) &&
-            int.TryParse(externalResult.AwayValue, out var awayValue))
+        if (int.TryParse(finalExternalResult.HomeValue, out var homeValue) &&
+            int.TryParse(finalExternalResult.AwayValue, out var awayValue))
         {
-            var (mappedHome, mappedAway) = muayThaiHelperService.MapSboToSettle(homeValue, awayValue);
-            externalResult.HomeValue = mappedHome;
-            externalResult.AwayValue = mappedAway;
+            return muayThaiHelperService.MapSboToSettle(homeValue, awayValue);
         }
 
-        return externalResult;
+        return null;
     }
 
-    private static bool AreScoresDifferent(ResultDetail? currentResult, ResultDetail externalResult, string userConfirmation)
+    private static bool AreScoresDifferent(ResultDetail currentResult, ResultDetail externalResult, string userConfirmation)
     {
         if (currentResult == null)
         {
             return true;
         }
 
-        if (AreScoresEqual(currentResult, externalResult))
+        var scoresMatch = AreScoresEqual(currentResult.HomeValue, externalResult.HomeValue) &&
+                         AreScoresEqual(currentResult.AwayValue, externalResult.AwayValue);
+
+        if (scoresMatch)
         {
             return false;
         }
 
         var hasValidScores = HasValidScores(currentResult);
-        var hasUserConfirmation = !string.Equals(userConfirmation, "-");
+        var hasUserConfirmation = !string.Equals(userConfirmation, SuspenderDefaultValue);
 
         return hasValidScores || hasUserConfirmation;
     }
 
-    private static bool AreScoresEqual(ResultDetail currentResult, ResultDetail externalResult)
+    private static bool AreScoresEqual(string score1, string score2)
     {
-        var homeScoresMatch = string.Equals(currentResult.HomeValue, externalResult.HomeValue);
-        var awayScoresMatch = string.Equals(currentResult.AwayValue, externalResult.AwayValue);
-
-        return homeScoresMatch && awayScoresMatch;
+        return string.Equals(score1, score2);
     }
 
     private static bool HasValidScores(ResultDetail result)
     {
-        return !string.IsNullOrWhiteSpace(result.HomeValue) &&
-               !string.IsNullOrWhiteSpace(result.AwayValue);
+        return !string.IsNullOrWhiteSpace(result.HomeValue) && !string.IsNullOrWhiteSpace(result.AwayValue);
     }
 
-    private static bool AreScoresInconsistent(int? homeScore, int? awayScore, ResultDetail externalResult)
+    private static bool HasNoScores(int? homeScore, int? awayScore)
     {
-        var homeScoresMatch = string.Equals(homeScore?.ToString(), externalResult.HomeValue);
-        var awayScoresMatch = string.Equals(awayScore?.ToString(), externalResult.AwayValue);
-
-        return !homeScoresMatch || !awayScoresMatch;
+        return homeScore == null && awayScore == null;
     }
 
-    private static bool HasNoFinalScores(Match match)
+    private static ResultDetail FindResultByResourceType(IEnumerable<ResultDetail> results, string resourceType)
     {
-        return match.FinalHomeScore == null && match.FinalAwayScore == null;
+        return results.FirstOrDefault(result => result.ResourceId == resourceType);
     }
 
-    private static bool HasNoHalftimeScores(Match match)
+    private static ResultDetail FindCurrentResult(IEnumerable<ResultDetail> resultDetails, int matchId, string resourceId)
     {
-        return match.HalfTimeHomeScore == null && match.HalfTimeAwayScore == null;
+        return resultDetails.FirstOrDefault(result =>
+            result.MatchId == matchId &&
+            result.SourceId == SourceType.Normal &&
+            result.ResourceId == resourceId);
     }
 
-    private static bool IsMatchSuspended(string suspenderValue)
+    private static List<ResultDetail> GetSboResults(int matchId, IEnumerable<ResultDetail> resultDetails)
     {
-        return !string.Equals(suspenderValue, "-");
-    }
-
-    private static List<ResultDetail> GetExternalResults(int matchId, IEnumerable<ResultDetail> resultDetails)
-    {
-        return resultDetails
-            .Where(result =>
-                result.MatchId == matchId &&
-                result.SourceId != SourceType.Normal &&
-                HasValidScores(result)).ToList();
+        return resultDetails.Where(result =>
+            result.MatchId == matchId &&
+            result.SourceId != SourceType.Normal &&
+            HasValidScores(result)).ToList();
     }
 }
