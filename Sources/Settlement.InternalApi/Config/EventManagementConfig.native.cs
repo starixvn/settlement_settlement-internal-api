@@ -1,4 +1,5 @@
 ﻿using Settlement.EventManagement.Services;
+using Settlement.EventManagement.Services.MultiSports;
 
 namespace Settlement.InternalApi.Config;
 
@@ -17,5 +18,6 @@ public static class EventManagementConfig
         services.AddTransient<SiteMatchService, SiteMatchServiceImp>();
         services.AddTransient<ScoreService, ScoreServiceImp>();
         services.AddTransient<AdjustEventStatusService, AdjustEventStatusServiceImp>();
+        services.AddTransient<MuayThaiHelperService, MuayThaiHelperServiceImp>();
     }
 }
