@@ -17,5 +17,6 @@ public static class EventManagementConfig
         services.AddTransient<SiteMatchService, SiteMatchServiceImp>();
         services.AddTransient<ScoreService, ScoreServiceImp>();
         services.AddTransient<AdjustEventStatusService, AdjustEventStatusServiceImp>();
+        services.AddTransient<MuayThaiHelperService, MuayThaiHelperServiceImp>();
     }
 }

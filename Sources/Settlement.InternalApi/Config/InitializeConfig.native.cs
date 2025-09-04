@@ -5,6 +5,7 @@ using Fanex.Logging;
 using Fanex.RemotingRef;
 using Fanex.Settlement.Converter.Services;
 using Fanex.Settlement.ScaleOut.Services;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Settlement.Business;
 using Settlement.Business.Data;
 using Settlement.Internal.Services;
@@ -20,11 +21,13 @@ public static class InitializeConfig
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
+        services.AddConfigRedisCache(configuration);
         services.AddCoreServices(configuration);
         services.AddGamingConfigServices();
         services.AddSettlementBusinessServices();
         services.AddSettlementBusinessDataServices();
         services.AddEventManagementServices();
+        services.AddConfigureServer();
 
         return services;
     }
@@ -50,7 +53,30 @@ public static class InitializeConfig
         services.AddSingleton<IRemotingRefService, RemotingRefService>();
     }
 
-    public static void AddConfigRedisCache(this IServiceCollection service, IConfiguration configuration)
+    private static void AddConfigureServer(this IServiceCollection services)
+    {
+        services.Configure<KestrelServerOptions>(options =>
+        {
+            options.AllowSynchronousIO = true;
+
+            options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(10);
+            options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);
+            options.Limits.MaxRequestBodySize = 52428800;
+
+            options.Limits.MinRequestBodyDataRate = new MinDataRate(
+                bytesPerSecond: 1024 * 1024,
+                gracePeriod: TimeSpan.FromMinutes(10)
+            );
+        });
+
+        services.Configure<IISServerOptions>(options =>
+        {
+            options.AllowSynchronousIO = true;
+            options.MaxRequestBodySize = 104857600;
+        });
+    }
+
+    private static void AddConfigRedisCache(this IServiceCollection service, IConfiguration configuration)
     {
         var redisConfig = configuration.GetSection("AuthSettings:RedisConfig").Value;
         service.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect($"{redisConfig}"));
