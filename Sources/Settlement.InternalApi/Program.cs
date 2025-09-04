@@ -21,8 +21,6 @@ services.AddOneBookUmForService(builder.Configuration);
 
 services.AddFanexLogSentry(builder.Configuration);
 
-services.AddConfigRedisCache(builder.Configuration);
-
 services.AddInitialServices(builder.Configuration);
 
 services.Configure<AppSettingsKey>(builder.Configuration);
@@ -30,6 +28,11 @@ services.Configure<AppSettingsKey>(builder.Configuration);
 services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 var app = builder.Build();
+app.Use(async (context, next) =>
+{
+    context.RequestAborted = new CancellationTokenSource(TimeSpan.FromMinutes(5)).Token;
+    await next();
+});
 
 if (app.Environment.IsDevelopment())
 {
