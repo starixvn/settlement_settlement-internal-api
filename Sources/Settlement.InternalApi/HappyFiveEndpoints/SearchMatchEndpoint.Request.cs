@@ -6,7 +6,7 @@ public class SearchMatchEndpointRequest
 
     public string Status { get; set; }
 
-    public DateTimeOffset FromDate { get; set; } = DateTimeOffset.Now.AddDays(-1);
+    public DateTime FromDate { get; set; } = DateTimeOffset.Now.Date.AddDays(-1);
 
-    public DateTimeOffset ToDate { get; set; } = DateTimeOffset.Now;
+    public DateTime ToDate { get; set; } = DateTimeOffset.Now.Date;
 }
