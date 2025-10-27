@@ -6,6 +6,7 @@ using Settlement.Internal.Models;
 using Settlement.InternalApi;
 using Settlement.InternalApi.Config;
 using Settlement.InternalApi.Middleware;
+using Settlement.JackTime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ services.AddEndpoints();
 
 services.AddHealthChecks();
 
+services.AddHttpClient();
+
 services.AddFanexSql(builder.Configuration);
 
 services.AddOneBookUmForService(builder.Configuration);
@@ -22,6 +25,8 @@ services.AddOneBookUmForService(builder.Configuration);
 services.AddFanexLogSentry(builder.Configuration);
 
 services.AddInitialServices(builder.Configuration);
+
+services.JackTimeConfigServices();
 
 services.Configure<AppSettingsKey>(builder.Configuration);
 
