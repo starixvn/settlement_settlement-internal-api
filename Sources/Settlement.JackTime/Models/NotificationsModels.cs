@@ -4,20 +4,14 @@ public class NotificationsModels
 {
     public ulong Offset { get; set; }
 
-    public List<Leg> Legs { get; set; } = new List<Leg>();
+    public List<BetBuilderOddsNotification> Notifications { get; set; } = [];
 }
 
-public class Leg
+public class BetBuilderOddsNotification
 {
-    public int MatchId { get; set; }
+    public string MatchId { get; set; }
 
-    public int Bettype { get; set; }
+    public string BetId { get; set; }
 
-    public decimal Hdp { get; set; }
-
-    public string BetTeam { get; set; }
-
-    public int WayId { get; set; }
-
-    public decimal Odd { get; set; }
+    public decimal Odds { get; set; }
 }

@@ -1,38 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Settlement.JackTime.Models;
+﻿using Google.Protobuf.Collections;
 
 namespace Settlement.JackTime.Services;
 
 public interface NotificationsServices
 {
-    List<Leg> ExtractLegsFromNotifications(IEnumerable<dynamic> notifications);
+    List<Models.BetBuilderOddsNotification> ExtractLegsFromNotifications(RepeatedField<Notification> notifications);
 }
 
 public class NotificationsServicesImp : NotificationsServices
 {
-    public List<Leg> ExtractLegsFromNotifications(IEnumerable<dynamic> notifications)
+    public List<Models.BetBuilderOddsNotification> ExtractLegsFromNotifications(RepeatedField<Notification> notifications)
     {
-        var allLegs = new List<Leg>();
-        foreach (var notification in notifications)
-        {
-            if (notification.AutoSell?.SellProperties?.LegProbabilities?.Legs != null)
+        return [.. notifications
+            .Where(notification => notification.BetBuilderOdds != null)
+            .Select(notification => notification.BetBuilderOdds)
+            .Select(betBuilderOdd => new Models.BetBuilderOddsNotification
             {
-                foreach (var leg in notification.AutoSell.SellProperties.LegProbabilities.Legs)
-                {
-                    var legModel = new Leg
-                    {
-                        MatchId = int.Parse(leg.Way.Market.MatchId.Id),
-                        BetTeam = leg.Way.WayId.Id,
-                        WayId = int.Parse(leg.Way.WayId.Id),
-                    };
-                    allLegs.Add(legModel);
-                }
-            }
-        }
-        return allLegs;
+                MatchId = betBuilderOdd.MatchId.Id,
+                BetId = betBuilderOdd.Bet.BetId.Id,
+                Odds = Convert.ToDecimal(betBuilderOdd.Odds)
+            })];
     }
 }

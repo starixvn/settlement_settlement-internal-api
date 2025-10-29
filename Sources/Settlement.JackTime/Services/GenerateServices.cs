@@ -22,7 +22,7 @@ public class GenerateServicesImp(NotificationsServices notificationsServices) : 
             data = new NotificationsModels
             {
                 Offset = commandReplyMessage.QueryResult.Notifications.Offset,
-                Legs = allLegs
+                Notifications = allLegs
             };
         }
         catch (Exception ex)

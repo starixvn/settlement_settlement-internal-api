@@ -1,23 +1,22 @@
 ﻿using MinimalApi.Endpoint;
 using Settlement.JackTime.Models;
-using Settlement.JackTime.Requests;
 using Settlement.JackTime.Services;
 
 namespace Settlement.InternalApi.JackTimeEndpoints;
 
-public class NotificationsEndpoint(JackTimeServices jackTimeServices) : IEndpoint<IResult, NotificationsRequest>
+public class NotificationsEndpoint(JackTimeServices jackTimeServices) : IEndpoint<IResult, ulong>
 {
     public void AddRoute(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/jacktime/notifications",
-             async (NotificationsRequest request) => await HandleAsync(request))
+        app.MapGet("api/jacktime-cash-out/notifications/{offset}",
+             async (ulong offset) => await HandleAsync(offset))
             .Produces<Results<NotificationsModels>>()
             .WithTags("JackTimeEndpoints");
     }
 
-    public async Task<IResult> HandleAsync(NotificationsRequest request)
+    public async Task<IResult> HandleAsync(ulong offset)
     {
-        var balls = await jackTimeServices.GetNotificationsAsync(request);
+        var balls = await jackTimeServices.GetNotificationsAsync(offset);
 
         return Results.Ok(balls);
     }
