@@ -30,11 +30,11 @@ public class JackTimeServicesTests
         // Arrange
         var offset = 12345ul;
         var expectedUrl = "https://api.jacktime.com/query";
-        var apiResponse = "{\"queryResult\":{\"notifications\":{\"offset\":12345,\"notifications\":[]}}}";
+        var apiResponse = "{\"queryResult\":{\"resultCode\":\"SUCCESS\",\"notifications\":{\"offset\":12345,\"notifications\":[]}}}";
         var expectedResult = new Results<NotificationsModels>
         {
             Data = new NotificationsModels { Offset = 12345, Notifications = [] },
-            ErrMsg = string.Empty
+            ErrMsg = "SUCCESS"
         };
 
         var appSettings = new AppSettingsKey
@@ -46,15 +46,19 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(apiResponse);
-        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(expectedResult);
+        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(Task.FromResult(expectedResult));
 
         // Act
         var result = await _service.GetNotificationsAsync(offset);
 
         // Assert
         Assert.NotNull(result);
+        if (!result.IsSuccessful)
+        {
+            Console.WriteLine($"Error message: {result.ErrMsg}");
+        }
         Assert.True(result.IsSuccessful);
-        Assert.Empty(result.ErrMsg);
+        Assert.Equal("SUCCESS", result.ErrMsg);
         Assert.NotNull(result.Data);
         Assert.Equal(12345ul, result.Data.Offset);
 
@@ -71,11 +75,11 @@ public class JackTimeServicesTests
         // Arrange
         var offset = 0ul;
         var expectedUrl = "https://api.jacktime.com/query";
-        var apiResponse = "{\"queryResult\":{\"notifications\":{\"offset\":0,\"notifications\":[]}}}";
+        var apiResponse = "{\"queryResult\":{\"resultCode\":\"SUCCESS\",\"notifications\":{\"offset\":0,\"notifications\":[]}}}";
         var expectedResult = new Results<NotificationsModels>
         {
             Data = new NotificationsModels { Offset = 0, Notifications = [] },
-            ErrMsg = string.Empty
+            ErrMsg = "SUCCESS"
         };
 
         var appSettings = new AppSettingsKey
@@ -87,7 +91,7 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(apiResponse);
-        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(expectedResult);
+        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(Task.FromResult(expectedResult));
 
         // Act
         var result = await _service.GetNotificationsAsync(offset);
@@ -95,7 +99,7 @@ public class JackTimeServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsSuccessful);
-        Assert.Empty(result.ErrMsg);
+        Assert.Equal("SUCCESS", result.ErrMsg);
         Assert.NotNull(result.Data);
         Assert.Equal(0ul, result.Data.Offset);
 
@@ -111,11 +115,11 @@ public class JackTimeServicesTests
         // Arrange
         var offset = 999999999ul;
         var expectedUrl = "https://api.jacktime.com/query";
-        var apiResponse = "{\"queryResult\":{\"notifications\":{\"offset\":999999999,\"notifications\":[]}}}";
+        var apiResponse = "{\"queryResult\":{\"resultCode\":\"SUCCESS\",\"notifications\":{\"offset\":999999999,\"notifications\":[]}}}";
         var expectedResult = new Results<NotificationsModels>
         {
             Data = new NotificationsModels { Offset = 999999999, Notifications = [] },
-            ErrMsg = string.Empty
+            ErrMsg = "SUCCESS"
         };
 
         var appSettings = new AppSettingsKey
@@ -127,7 +131,7 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(apiResponse);
-        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(expectedResult);
+        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(Task.FromResult(expectedResult));
 
         // Act
         var result = await _service.GetNotificationsAsync(offset);
@@ -135,7 +139,7 @@ public class JackTimeServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsSuccessful);
-        Assert.Empty(result.ErrMsg);
+        Assert.Equal("SUCCESS", result.ErrMsg);
         Assert.NotNull(result.Data);
         Assert.Equal(999999999ul, result.Data.Offset);
 
@@ -151,11 +155,11 @@ public class JackTimeServicesTests
         // Arrange
         var offset = 12345ul;
         var expectedUrl = "https://different-api.com/query";
-        var apiResponse = "{\"queryResult\":{\"notifications\":{\"offset\":12345,\"notifications\":[]}}}";
+        var apiResponse = "{\"queryResult\":{\"resultCode\":\"SUCCESS\",\"notifications\":{\"offset\":12345,\"notifications\":[]}}}";
         var expectedResult = new Results<NotificationsModels>
         {
             Data = new NotificationsModels { Offset = 12345, Notifications = [] },
-            ErrMsg = string.Empty
+            ErrMsg = "SUCCESS"
         };
 
         var appSettings = new AppSettingsKey
@@ -167,7 +171,7 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(apiResponse);
-        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(expectedResult);
+        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(Task.FromResult(expectedResult));
 
         // Act
         var result = await _service.GetNotificationsAsync(offset);
@@ -202,7 +206,7 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns("some response");
-        _mockGenerateServices.GetNotificationsAsync(Arg.Any<string>()).Returns(errorResult);
+        _mockGenerateServices.GetNotificationsAsync(Arg.Any<string>()).Returns(Task.FromResult(errorResult));
 
         // Act
         var result = await _service.GetNotificationsAsync(offset);
@@ -219,11 +223,11 @@ public class JackTimeServicesTests
     {
         // Arrange
         var offset = 54321ul;
-        var apiResponse = "{\"queryResult\":{\"notifications\":{\"offset\":54321,\"notifications\":[]}}}";
+        var apiResponse = "{\"queryResult\":{\"resultCode\":\"SUCCESS\",\"notifications\":{\"offset\":54321,\"notifications\":[]}}}";
         var expectedResult = new Results<NotificationsModels>
         {
             Data = new NotificationsModels { Offset = 54321, Notifications = [] },
-            ErrMsg = string.Empty
+            ErrMsg = "SUCCESS"
         };
 
         var appSettings = new AppSettingsKey
@@ -235,7 +239,7 @@ public class JackTimeServicesTests
         };
         _mockAppSettingsKey.Value.Returns(appSettings);
         _mockInvokeExternalApiServices.PostAsync(Arg.Any<string>(), Arg.Any<string>()).Returns(apiResponse);
-        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(expectedResult);
+        _mockGenerateServices.GetNotificationsAsync(apiResponse).Returns(Task.FromResult(expectedResult));
 
         // Act
         await _service.GetNotificationsAsync(offset);

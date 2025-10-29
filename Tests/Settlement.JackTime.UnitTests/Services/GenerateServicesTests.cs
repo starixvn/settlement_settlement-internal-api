@@ -21,6 +21,7 @@ public class GenerateServicesTests
         var validResponse = """
         {
             "queryResult": {
+                "resultCode": "SUCCESS",
                 "notifications": {
                     "offset": 12345,
                     "notifications": []
@@ -35,7 +36,6 @@ public class GenerateServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsSuccessful);
-        Assert.Empty(result.ErrMsg);
         Assert.NotNull(result.Data);
         Assert.Equal(12345ul, result.Data.Offset);
         Assert.Empty(result.Data.Notifications);
@@ -48,6 +48,7 @@ public class GenerateServicesTests
         var validResponse = """
         {
             "queryResult": {
+                "resultCode": "SUCCESS",
                 "notifications": {
                     "offset": 54321,
                     "notifications": [
@@ -70,7 +71,6 @@ public class GenerateServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsSuccessful);
-        Assert.Empty(result.ErrMsg);
         Assert.NotNull(result.Data);
         Assert.Equal(54321ul, result.Data.Offset);
         Assert.NotEmpty(result.Data.Notifications);

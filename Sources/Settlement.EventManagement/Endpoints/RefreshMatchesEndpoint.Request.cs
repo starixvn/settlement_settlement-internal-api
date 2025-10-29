@@ -1,4 +1,4 @@
-﻿namespace Settlement.InternalApi.MatchEndpoints;
+﻿namespace Settlement.EventManagement.Endpoints;
 
 public class RefreshMatchesEndpointRequest
 {

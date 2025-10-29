@@ -2,9 +2,9 @@
 using Fanex.Settlement.ScaleOut.Criteria.Update;
 using Fanex.Settlement.ScaleOut.Request;
 using Settlement.EventManagement.Criteria;
+using Settlement.EventManagement.Endpoints;
 using Settlement.Gaming.Criteria.Happy5;
-using Settlement.InternalApi.HappyFiveEndpoints;
-using Settlement.InternalApi.MatchEndpoints;
+using Settlement.Gaming.Endpoints;
 
 namespace Settlement.InternalApi;
 

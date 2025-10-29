@@ -1,11 +1,12 @@
 ﻿using Fanex.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Settlement.Internal.Models;
 using System.Text;
 
-namespace Settlement.InternalApi.EndpointFilters;
+namespace Settlement.Internal.EndpointFilters;
 
 public class LogRequestFilter(IOptions<AppSettingsKey> appSettingsKey) : IEndpointFilter
 {

@@ -5,6 +5,7 @@ using ONEbook.UM.DependencyInjection;
 using Settlement.Internal.Models;
 using Settlement.InternalApi;
 using Settlement.InternalApi.Config;
+using Settlement.InternalApi.Extensions;
 using Settlement.InternalApi.Middleware;
 using Settlement.JackTime;
 
@@ -13,6 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 services.AddEndpoints();
+
+services.AddEndpointsFromAssemblies(
+    typeof(Settlement.EventManagement.Endpoints.RefreshMatchesEndpoint).Assembly,
+    typeof(Settlement.Gaming.Endpoints.GetBallsEndpoint).Assembly,
+    typeof(Settlement.Gaming.Endpoints.SearchMatchEndpoint).Assembly,
+    typeof(Settlement.Gaming.Endpoints.SettleEndpoint).Assembly,
+    typeof(Settlement.JackTime.Endpoints.NotificationsEndpoint).Assembly
+);
 
 services.AddHealthChecks();
 

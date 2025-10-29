@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using MinimalApi.Endpoint;
 using Settlement.EventManagement.Criteria;
+using Settlement.EventManagement.Models;
 using Settlement.EventManagement.Services;
-using Settlement.Gaming.Models.Happy5;
 
-namespace Settlement.InternalApi.MatchEndpoints;
+namespace Settlement.EventManagement.Endpoints;
 
 public class RefreshMatchesEndpoint(
     IMapper mapper,
@@ -16,7 +19,7 @@ public class RefreshMatchesEndpoint(
     {
         app.MapPost("api/multi-sports/auto-refresh",
             async (RefreshMatchesEndpointRequest request) => await HandleAsync(request))
-            .Produces<List<LeaguesModel>>()
+            .Produces<List<Match>>()
             .WithTags("EventManagementEndpoints");
     }
 

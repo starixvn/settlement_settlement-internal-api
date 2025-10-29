@@ -33,6 +33,8 @@
     <PackageReference Include="Fanex.Settlement.Business" Version="1.0.26" />
     <PackageReference Include="Fanex.Settlement.Converter" Version="1.0.0.1" />
     <PackageReference Include="Fanex.Settlement.ScaleOut" Version="1.4.6.4" />
+    <PackageReference Include="MinimalApi.Endpoint" Version="1.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />

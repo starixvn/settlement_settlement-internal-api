@@ -1,4 +1,5 @@
 ﻿using Fanex.Logging;
+using Settlement.JackTime.Constants;
 using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
@@ -17,17 +18,18 @@ public class GenerateServicesImp(NotificationsServices notificationsServices) : 
         try
         {
             var commandReplyMessage = NotificationsQueryResultMessage.Parser.ParseJson(response);
-            var allLegs = notificationsServices.ExtractLegsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
+            var resultCode = commandReplyMessage.QueryResult.ResultCode.ToString();
 
-            data = new NotificationsModels
+            if (IsSuccessResult(resultCode))
             {
-                Offset = commandReplyMessage.QueryResult.Notifications.Offset,
-                Notifications = allLegs
-            };
+                data = ProcessSuccessResponse(commandReplyMessage);
+            }
+
+            message = resultCode;
         }
         catch (Exception ex)
         {
-            await LogService.ErrorAsync($"JackTime GetNotificationsAsync: {ex.Message}");
+            await LogService.ErrorAsync($"JackTime BetBuilderOddsNotification: {ex.Message}");
             message = ex.Message;
         }
 
@@ -35,6 +37,21 @@ public class GenerateServicesImp(NotificationsServices notificationsServices) : 
         {
             ErrMsg = message,
             Data = data
+        };
+    }
+
+    private static bool IsSuccessResult(string resultCode)
+    {
+        return string.Equals(resultCode, Result.Success, StringComparison.CurrentCultureIgnoreCase);
+    }
+
+    private NotificationsModels ProcessSuccessResponse(NotificationsQueryResultMessage commandReplyMessage)
+    {
+        var notificationsList = notificationsServices.ExtractLegsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
+        return new NotificationsModels
+        {
+            Offset = commandReplyMessage.QueryResult.Notifications.Offset,
+            Notifications = notificationsList
         };
     }
 }

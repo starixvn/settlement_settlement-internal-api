@@ -1,10 +1,9 @@
-﻿using MinimalApi.Endpoint;
-using Settlement.Gaming.Models;
+﻿using Settlement.Gaming.Models;
 using Settlement.Gaming.Requests;
 using Settlement.Gaming.Services.Happy5;
-using Settlement.InternalApi.EndpointFilters;
+using Settlement.Internal.EndpointFilters;
 
-namespace Settlement.InternalApi.HappyFiveEndpoints;
+namespace Settlement.Gaming.Endpoints;
 
 public class SettleEndpoint(SettleService settlementService) : IEndpoint<IResult, HappyFiveRequest>
 {

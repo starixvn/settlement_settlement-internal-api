@@ -1,4 +1,4 @@
-﻿namespace Settlement.InternalApi.HappyFiveEndpoints;
+﻿namespace Settlement.Gaming.Endpoints;
 
 public class SearchMatchEndpointRequest
 {
