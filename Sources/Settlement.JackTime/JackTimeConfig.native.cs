@@ -9,7 +9,9 @@ public static class JackTimeConfig
     {
         services.AddTransient<GenerateServices, GenerateServicesImp>();
         services.AddTransient<InvokeExternalAPIServices, InvokeExternalAPIServicesImp>();
-        services.AddTransient<JackTimeServices, JackTimeServicesImp>();
         services.AddTransient<NotificationsServices, NotificationsServicesImp>();
+        services.AddTransient<BetBuilderOddsNotificationServices, BetBuilderOddsNotificationServicesImp>();
+        services.AddTransient<VoidLegsServices, VoidLegsServicesImp>();
+        services.AddTransient<CreateRequestServices, CreateRequestServicesImp>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using Fanex.Logging;
-using Settlement.JackTime.Constants;
+﻿using Settlement.JackTime.Constants;
 using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
@@ -7,9 +6,11 @@ namespace Settlement.JackTime.Services;
 public interface GenerateServices
 {
     Task<Results<NotificationsModels>> GetNotificationsAsync(string response);
+
+    Results<string> CommandReplyMessageAsync(string response);
 }
 
-public class GenerateServicesImp(NotificationsServices notificationsServices) : GenerateServices
+public class GenerateServicesImp(BetBuilderOddsNotificationServices notificationsServices) : GenerateServices
 {
     public async Task<Results<NotificationsModels>> GetNotificationsAsync(string response)
     {
@@ -40,6 +41,17 @@ public class GenerateServicesImp(NotificationsServices notificationsServices) : 
         };
     }
 
+    public Results<string> CommandReplyMessageAsync(string response)
+    {
+        var commandReplyMessage = CommandReplyMessage.Parser.ParseJson(response);
+        var resultCode = commandReplyMessage.Header.ReplyStatusCode.ToString();
+
+        return new Results<string>
+        {
+            ErrMsg = resultCode,
+        };
+    }
+
     private static bool IsSuccessResult(string resultCode)
     {
         return string.Equals(resultCode, Result.Success, StringComparison.CurrentCultureIgnoreCase);
@@ -47,7 +59,7 @@ public class GenerateServicesImp(NotificationsServices notificationsServices) : 
 
     private NotificationsModels ProcessSuccessResponse(NotificationsQueryResultMessage commandReplyMessage)
     {
-        var notificationsList = notificationsServices.ExtractLegsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
+        var notificationsList = notificationsServices.ExtractOddsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
         return new NotificationsModels
         {
             Offset = commandReplyMessage.QueryResult.Notifications.Offset,

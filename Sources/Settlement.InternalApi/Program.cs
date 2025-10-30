@@ -16,12 +16,13 @@ var services = builder.Services;
 services.AddEndpoints();
 
 services.AddEndpointsFromAssemblies(
-    typeof(Settlement.EventManagement.Endpoints.RefreshMatchesEndpoint).Assembly,
-    typeof(Settlement.Gaming.Endpoints.GetBallsEndpoint).Assembly,
-    typeof(Settlement.Gaming.Endpoints.SearchMatchEndpoint).Assembly,
-    typeof(Settlement.Gaming.Endpoints.SettleEndpoint).Assembly,
-    typeof(Settlement.JackTime.Endpoints.NotificationsEndpoint).Assembly
-);
+   typeof(Settlement.EventManagement.Endpoints.RefreshMatchesEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.GetBallsEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.SearchMatchEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.SettleEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.NotificationsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.VoidLegsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.UnVoidLegsEndpoint).Assembly);
 
 services.AddHealthChecks();
 

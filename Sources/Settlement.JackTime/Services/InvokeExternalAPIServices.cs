@@ -5,12 +5,12 @@ namespace Settlement.JackTime.Services;
 
 public interface InvokeExternalAPIServices
 {
-    Task<string> PostAsync(string requestString, string url);
+    Task<string> PostAsync(string requestString, string apiUrl);
 }
 
 public class InvokeExternalAPIServicesImp(IHttpClientFactory httpClientFactory) : InvokeExternalAPIServices
 {
-    public async Task<string> PostAsync(string requestString, string url)
+    public async Task<string> PostAsync(string requestString, string apiUrl)
     {
         var policy = Policy
            .Handle<HttpRequestException>()
@@ -20,7 +20,7 @@ public class InvokeExternalAPIServicesImp(IHttpClientFactory httpClientFactory) 
 
         return await policy.ExecuteAsync(async () =>
         {
-            var response = await httpClient.PostAsync(new Uri(url), requestContent);
+            var response = await httpClient.PostAsync(new Uri(apiUrl), requestContent);
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsStringAsync();

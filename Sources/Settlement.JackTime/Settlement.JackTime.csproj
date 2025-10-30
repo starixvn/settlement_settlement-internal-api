@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <Compile Remove="Criteria\**" />
-    <Compile Remove="Requests\**" />
     <EmbeddedResource Remove="Criteria\**" />
-    <EmbeddedResource Remove="Requests\**" />
     <None Remove="Criteria\**" />
-    <None Remove="Requests\**" />
   </ItemGroup>
 
   <ItemGroup>

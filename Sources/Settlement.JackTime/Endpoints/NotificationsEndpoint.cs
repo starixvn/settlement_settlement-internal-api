@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using MinimalApi.Endpoint;
-using Settlement.JackTime.Models;
+﻿using Settlement.JackTime.Models;
 using Settlement.JackTime.Services;
 
 namespace Settlement.JackTime.Endpoints;
 
-public class NotificationsEndpoint(JackTimeServices jackTimeServices) : IEndpoint<IResult, ulong>
+public class NotificationsEndpoint(NotificationsServices jackTimeServices) : IEndpoint<IResult, ulong>
 {
     public void AddRoute(IEndpointRouteBuilder app)
     {

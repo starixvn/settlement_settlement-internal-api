@@ -1,17 +1,24 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using NSubstitute;
+using Settlement.Internal.Models;
 using Settlement.JackTime.Services;
 
 namespace Settlement.JackTime.UnitTests.Services;
 
 public class GenerateServicesTests
 {
-    private readonly GenerateServices _service;
+    private readonly GenerateServices service;
 
     public GenerateServicesTests()
     {
         // Create a real implementation instead of mocking
-        var notificationsServices = new NotificationsServicesImp();
-        _service = new GenerateServicesImp(notificationsServices);
+        var mockAppSettingsKey = Substitute.For<IOptions<AppSettingsKey>>();
+        var mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
+        var mockGenerateServices = Substitute.For<GenerateServices>();
+        var mockCreateRequestServices = Substitute.For<CreateRequestServices>();
+        var notificationsServices = new NotificationsServicesImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
+        service = new GenerateServicesImp(new BetBuilderOddsNotificationServicesImp());
     }
 
     [Fact]
@@ -31,7 +38,7 @@ public class GenerateServicesTests
         """;
 
         // Act
-        var result = await _service.GetNotificationsAsync(validResponse);
+        var result = await service.GetNotificationsAsync(validResponse);
 
         // Assert
         Assert.NotNull(result);
@@ -66,7 +73,7 @@ public class GenerateServicesTests
         """;
 
         // Act
-        var result = await _service.GetNotificationsAsync(validResponse);
+        var result = await service.GetNotificationsAsync(validResponse);
 
         // Assert
         Assert.NotNull(result);

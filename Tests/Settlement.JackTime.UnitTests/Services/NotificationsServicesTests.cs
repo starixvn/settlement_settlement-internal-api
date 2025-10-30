@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf.Collections;
+using Microsoft.Extensions.Options;
+using NSubstitute;
+using Settlement.Internal.Models;
 using Settlement.JackTime.Models;
 using Settlement.JackTime.Services;
 
@@ -11,11 +14,19 @@ namespace Settlement.JackTime.UnitTests.Services;
 
 public class NotificationsServicesTests
 {
-    private readonly NotificationsServices _service;
+    private readonly BetBuilderOddsNotificationServices service;
+    private readonly IOptions<AppSettingsKey> mockAppSettingsKey;
+    private readonly InvokeExternalAPIServices mockInvokeExternalApiServices;
+    private readonly GenerateServices mockGenerateServices;
+    private readonly CreateRequestServices mockCreateRequestServices;
 
     public NotificationsServicesTests()
     {
-        _service = new NotificationsServicesImp();
+        mockAppSettingsKey = Substitute.For<IOptions<AppSettingsKey>>();
+        mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
+        mockGenerateServices = Substitute.For<GenerateServices>();
+        mockCreateRequestServices = Substitute.For<CreateRequestServices>();
+        service = new BetBuilderOddsNotificationServicesImp();
     }
 
     [Fact]
@@ -29,7 +40,7 @@ public class NotificationsServicesTests
         notifications.Add(notification2);
 
         // Act
-        var result = _service.ExtractLegsFromNotifications(notifications);
+        var result = service.ExtractOddsFromNotifications(notifications);
 
         // Assert
         Assert.NotNull(result);
@@ -59,7 +70,7 @@ public class NotificationsServicesTests
         notifications.Add(notification3);
 
         // Act
-        var result = _service.ExtractLegsFromNotifications(notifications);
+        var result = service.ExtractOddsFromNotifications(notifications);
 
         // Assert
         Assert.NotNull(result);
@@ -75,7 +86,7 @@ public class NotificationsServicesTests
         var notifications = new RepeatedField<Notification>();
 
         // Act
-        var result = _service.ExtractLegsFromNotifications(notifications);
+        var result = service.ExtractOddsFromNotifications(notifications);
 
         // Assert
         Assert.NotNull(result);
@@ -93,7 +104,7 @@ public class NotificationsServicesTests
         notifications.Add(notification2);
 
         // Act
-        var result = _service.ExtractLegsFromNotifications(notifications);
+        var result = service.ExtractOddsFromNotifications(notifications);
 
         // Assert
         Assert.NotNull(result);
@@ -109,7 +120,7 @@ public class NotificationsServicesTests
         notifications.Add(notification);
 
         // Act
-        var result = _service.ExtractLegsFromNotifications(notifications);
+        var result = service.ExtractOddsFromNotifications(notifications);
 
         // Assert
         Assert.NotNull(result);

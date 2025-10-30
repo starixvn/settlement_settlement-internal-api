@@ -1,24 +1,28 @@
-﻿using Google.Protobuf.Collections;
+﻿using Google.Protobuf;
+using Microsoft.Extensions.Options;
+using Settlement.Internal.Models;
+using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
 
 public interface NotificationsServices
 {
-    List<Models.BetBuilderOddsNotification> ExtractLegsFromNotifications(RepeatedField<Notification> notifications);
+    Task<Results<NotificationsModels>> GetNotificationsAsync(ulong offset);
 }
 
-public class NotificationsServicesImp : NotificationsServices
+public class NotificationsServicesImp(
+    IOptions<AppSettingsKey> appSettingsKey,
+    InvokeExternalAPIServices invokeExternalApiServices,
+    GenerateServices generateServices,
+    CreateRequestServices createRequestServices) : NotificationsServices
 {
-    public List<Models.BetBuilderOddsNotification> ExtractLegsFromNotifications(RepeatedField<Notification> notifications)
+    public async Task<Results<NotificationsModels>> GetNotificationsAsync(ulong offset)
     {
-        return [.. notifications
-            .Where(notification => notification.BetBuilderOdds != null)
-            .Select(notification => notification.BetBuilderOdds)
-            .Select(betBuilderOdd => new Models.BetBuilderOddsNotification
-            {
-                MatchId = betBuilderOdd.MatchId.Id,
-                BetId = betBuilderOdd.Bet.BetId.Id,
-                Odds = Convert.ToDecimal(betBuilderOdd.Odds)
-            })];
+        var requestNotification = createRequestServices.CreateNotificationsRequest(offset);
+        var requestString = new JsonFormatter(JsonFormatter.Settings.Default).Format(requestNotification);
+        var apiUrl = $"{appSettingsKey.Value.ThirdPartyUri.JackTimeNotifications}";
+
+        var response = await invokeExternalApiServices.PostAsync(requestString, apiUrl);
+        return await generateServices.GetNotificationsAsync(response);
     }
 }
