@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JackTime.BetCore" Version="25.0.1-HybridParlay06" />
+    <PackageReference Include="JackTime.BetCore" Version="25.2.2-HybridParlay01" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
     <PackageReference Include="MinimalApi.Endpoint" Version="1.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
