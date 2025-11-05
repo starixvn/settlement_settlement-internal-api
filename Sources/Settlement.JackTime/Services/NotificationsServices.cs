@@ -23,6 +23,7 @@ public class NotificationsServicesImp(
         var apiUrl = $"{appSettingsKey.Value.ThirdPartyUri.JackTimeNotifications}";
 
         var response = await invokeExternalApiServices.PostAsync(requestString, apiUrl);
+        await LogService.InfoAsync($"JackTime Notifications Response: {response}");
         return await generateServices.GetNotificationsAsync(response);
     }
 }

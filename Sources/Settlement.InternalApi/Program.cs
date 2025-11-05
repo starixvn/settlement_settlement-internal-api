@@ -22,7 +22,8 @@ services.AddEndpointsFromAssemblies(
    typeof(Settlement.Gaming.Endpoints.SettleEndpoint).Assembly,
    typeof(Settlement.JackTime.Endpoints.NotificationsEndpoint).Assembly,
    typeof(Settlement.JackTime.Endpoints.VoidLegsEndpoint).Assembly,
-   typeof(Settlement.JackTime.Endpoints.UnVoidLegsEndpoint).Assembly);
+   typeof(Settlement.JackTime.Endpoints.UnVoidLegsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.VoidBetEndpoint).Assembly);
 
 services.AddHealthChecks();
 

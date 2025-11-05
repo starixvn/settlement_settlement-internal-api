@@ -9,6 +9,8 @@ namespace Settlement.JackTime.Services;
 
 public interface VoidLegsServices
 {
+    Task<Results<string>> VoidBetAsync(VoidBetInfoRequest voidBetInfoRequest);
+
     Task<Results<string>> VoidLegsAsync(VoidLegRequest voidLegRequest);
 
     Task<Results<string>> UnVoidLegsAsync(VoidLegRequest voidLegRequest);
@@ -20,6 +22,11 @@ public class VoidLegsServicesImp(
     GenerateServices generateServices,
     CreateRequestServices commandRequestServices) : VoidLegsServices
 {
+    public async Task<Results<string>> VoidBetAsync(VoidBetInfoRequest voidBetInfoRequest)
+    {
+        return await ProcessVoidBetInfosAsync(voidBetInfoRequest.VoidBetInfos, VoidBet);
+    }
+
     public async Task<Results<string>> VoidLegsAsync(VoidLegRequest voidLegRequest)
     {
         return await ProcessVoidBetInfosAsync(voidLegRequest.VoidBetInfos, VoidLegs);
@@ -44,6 +51,11 @@ public class VoidLegsServicesImp(
                 ? string.Join(" | ", resultFailed.Select(r => r.ErrMsg).ToArray())
                 : Result.Success
         };
+    }
+
+    private async Task<Results<string>> VoidBet(VoidBetInfo voidBetInfo)
+    {
+        return await ProcessSingleVoidBetAsync(voidBetInfo, commandRequestServices.CreateVoidBetCommandRequest);
     }
 
     private async Task<Results<string>> VoidLegs(VoidBetInfo voidBetInfo)

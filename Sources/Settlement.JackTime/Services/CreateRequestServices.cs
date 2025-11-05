@@ -4,6 +4,8 @@ namespace Settlement.JackTime.Services;
 
 public interface CreateRequestServices
 {
+    CommandRequestMessage CreateVoidBetCommandRequest(VoidBetInfo voidBetInfo);
+
     CommandRequestMessage CreateVoidCommandRequest(VoidBetInfo voidBetInfo);
 
     CommandRequestMessage CreateUnVoidCommandRequest(VoidBetInfo voidBetInfo);
@@ -13,11 +15,25 @@ public interface CreateRequestServices
 
 public class CreateRequestServicesImp : CreateRequestServices
 {
+    public CommandRequestMessage CreateVoidBetCommandRequest(VoidBetInfo voidBetInfo)
+    {
+        var commandRequest = new CommandRequestMessage
+        {
+            Header = CreateCommandRequestHeader(voidBetInfo.TransId),
+            Request = new CommandRequest
+            {
+                VoidBet = CreateVoidBetRequest(voidBetInfo)
+            }
+        };
+
+        return commandRequest;
+    }
+
     public CommandRequestMessage CreateVoidCommandRequest(VoidBetInfo voidBetInfo)
     {
         var commandRequest = new CommandRequestMessage
         {
-            Header = CreateCommandRequestHeader(voidBetInfo),
+            Header = CreateCommandRequestHeader(voidBetInfo.TransactionId),
             Request = new CommandRequest
             {
                 VoidLegs = CreateVoidLegsRequest(voidBetInfo)
@@ -37,7 +53,7 @@ public class CreateRequestServicesImp : CreateRequestServices
     {
         var commandRequest = new CommandRequestMessage
         {
-            Header = CreateCommandRequestHeader(voidBetInfo),
+            Header = CreateCommandRequestHeader(voidBetInfo.TransactionId),
             Request = new CommandRequest
             {
                 UnvoidLegs = CreateUnVoidLegsRequest(voidBetInfo)
@@ -53,13 +69,31 @@ public class CreateRequestServicesImp : CreateRequestServices
         return commandRequest;
     }
 
-    private static CommandRequestHeader CreateCommandRequestHeader(VoidBetInfo voidBetInfo)
+    private static CommandRequestHeader CreateCommandRequestHeader(string transactionId)
     {
         return new CommandRequestHeader
         {
             TransactionId = new TransactionId
             {
-                Id = voidBetInfo.TransactionId
+                Id = transactionId
+            }
+        };
+    }
+
+    private static VoidBetRequest CreateVoidBetRequest(VoidBetInfo voidBetInfo)
+    {
+        return new VoidBetRequest
+        {
+            Bet = new BetIdentifier
+            {
+                BetId = new BetId
+                {
+                    Id = voidBetInfo.TransId
+                },
+                UserId = new UserId
+                {
+                    Id = voidBetInfo.CustId.ToString()
+                }
             }
         };
     }
