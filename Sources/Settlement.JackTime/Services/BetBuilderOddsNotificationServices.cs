@@ -17,7 +17,7 @@ public class BetBuilderOddsNotificationServicesImp : BetBuilderOddsNotificationS
             .Select(betBuilderOdd => new Models.BetBuilderOddsNotification
             {
                 MatchId = betBuilderOdd.MatchId.Id,
-                BetId = betBuilderOdd.Bet.BetId.Id,
+                TransId = betBuilderOdd.Bet.BetId.Id,
                 Odds = Convert.ToDecimal(betBuilderOdd.Odds)
             })];
     }

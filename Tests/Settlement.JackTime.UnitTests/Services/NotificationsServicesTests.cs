@@ -45,15 +45,15 @@ public class NotificationsServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
-        
+
         var firstResult = result[0];
         Assert.Equal("match1", firstResult.MatchId);
-        Assert.Equal("bet1", firstResult.BetId);
+        Assert.Equal("bet1", firstResult.TransId);
         Assert.Equal(1.5m, firstResult.Odds);
 
         var secondResult = result[1];
         Assert.Equal("match2", secondResult.MatchId);
-        Assert.Equal("bet2", secondResult.BetId);
+        Assert.Equal("bet2", secondResult.TransId);
         Assert.Equal(2.0m, secondResult.Odds);
     }
 
@@ -133,13 +133,13 @@ public class NotificationsServicesTests
         // Create mock objects using reflection or dynamic objects
         // Since we can't directly instantiate protobuf objects, we'll use a different approach
         var notification = new Notification();
-        
+
         // Use reflection to set the BetBuilderOdds property
         var betBuilderOddsType = typeof(Notification).GetProperty("BetBuilderOdds")?.PropertyType;
         if (betBuilderOddsType != null)
         {
             var betBuilderOdds = Activator.CreateInstance(betBuilderOddsType);
-            
+
             // Set MatchId
             var matchIdProperty = betBuilderOddsType.GetProperty("MatchId");
             if (matchIdProperty != null)
@@ -149,7 +149,7 @@ public class NotificationsServicesTests
                 matchIdIdProperty?.SetValue(matchIdObj, matchId);
                 matchIdProperty.SetValue(betBuilderOdds, matchIdObj);
             }
-            
+
             // Set Bet
             var betProperty = betBuilderOddsType.GetProperty("Bet");
             if (betProperty != null)
@@ -165,14 +165,14 @@ public class NotificationsServicesTests
                 }
                 betProperty.SetValue(betBuilderOdds, betObj);
             }
-            
+
             // Set Odds
             var oddsProperty = betBuilderOddsType.GetProperty("Odds");
             oddsProperty?.SetValue(betBuilderOdds, odds);
-            
+
             typeof(Notification).GetProperty("BetBuilderOdds")?.SetValue(notification, betBuilderOdds);
         }
-        
+
         return notification;
     }
 

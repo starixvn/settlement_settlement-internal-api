@@ -11,7 +11,7 @@ public class BetBuilderOddsNotification
 {
     public string MatchId { get; set; }
 
-    public string BetId { get; set; }
+    public string TransId { get; set; }
 
     public decimal Odds { get; set; }
 }
