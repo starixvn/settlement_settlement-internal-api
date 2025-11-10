@@ -40,10 +40,10 @@ public class CreateRequestServicesImp : CreateRequestServices
             }
         };
 
-        foreach (var leg in voidBetInfo.Legs)
+        foreach (var leg in voidBetInfo.Selections)
         {
             var wayIdentifier = CreateWayIdentifier(leg);
-            commandRequest.Request.VoidLegs.Legs.Add(wayIdentifier);
+            commandRequest.Request.VoidLegs.BetBuilderSelections.Add(wayIdentifier);
         }
 
         return commandRequest;
@@ -60,10 +60,10 @@ public class CreateRequestServicesImp : CreateRequestServices
             }
         };
 
-        foreach (var leg in voidBetInfo.Legs)
+        foreach (var leg in voidBetInfo.Selections)
         {
             var wayIdentifier = CreateWayIdentifier(leg);
-            commandRequest.Request.UnvoidLegs.Legs.Add(wayIdentifier);
+            commandRequest.Request.UnvoidLegs.BetBuilderSelections.Add(wayIdentifier);
         }
 
         return commandRequest;
@@ -134,23 +134,23 @@ public class CreateRequestServicesImp : CreateRequestServices
         };
     }
 
-    private static WayIdentifier CreateWayIdentifier(Leg leg)
+    private static WayIdentifier CreateWayIdentifier(Selection selection)
     {
         return new WayIdentifier
         {
             WayId = new WayId
             {
-                Id = leg.WayId
+                Id = selection.WayId
             },
             Market = new MarketIdentifier
             {
                 MatchId = new MatchId
                 {
-                    Id = leg.MatchId.ToString()
+                    Id = selection.MatchId.ToString()
                 },
                 MarketId = new MarketId
                 {
-                    Id = leg.MarketId
+                    Id = selection.MarketId
                 }
             }
         };

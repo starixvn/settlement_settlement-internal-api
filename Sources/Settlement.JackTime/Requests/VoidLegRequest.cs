@@ -11,12 +11,14 @@ public class VoidBetInfo
 
     public string TransId { get; set; } = string.Empty;
 
+    public string MatchId { get; set; } = string.Empty;
+
     public long CustId { get; set; }
 
-    public List<Leg> Legs { get; set; } = [];
+    public List<Selection> Selections { get; set; } = [];
 }
 
-public class Leg
+public class Selection
 {
     public string WayId { get; set; } = string.Empty;
 

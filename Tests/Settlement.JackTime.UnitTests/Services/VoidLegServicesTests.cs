@@ -53,7 +53,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -103,7 +103,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -124,7 +124,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T002",
                     CustId = 1002,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -192,7 +192,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -242,7 +242,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -292,7 +292,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -307,7 +307,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T002",
                     CustId = 1002,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {
@@ -357,7 +357,7 @@ public class VoidLegServicesTests
                     TransactionId = "451678251421532160_20251030002219",
                     TransId = "T001",
                     CustId = 1001,
-                    Legs = new List<Leg>
+                    Selections = new List<Selection>
                     {
                         new()
                         {

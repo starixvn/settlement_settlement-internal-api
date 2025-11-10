@@ -18,7 +18,7 @@ public class BetBuilderOddsNotificationServicesImp : BetBuilderOddsNotificationS
             {
                 MatchId = betBuilderOdd.MatchId.Id,
                 TransId = betBuilderOdd.Bet.BetId.Id,
-                Odds = Convert.ToDecimal(betBuilderOdd.Odds)
+                Odds = Math.Truncate(Convert.ToDecimal(betBuilderOdd.Odds) * 100) / 100
             })];
     }
 }

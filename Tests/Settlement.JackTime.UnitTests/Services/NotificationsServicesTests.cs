@@ -1,31 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Google.Protobuf.Collections;
-using Microsoft.Extensions.Options;
-using NSubstitute;
-using Settlement.Internal.Models;
-using Settlement.JackTime.Models;
 using Settlement.JackTime.Services;
 
 namespace Settlement.JackTime.UnitTests.Services;
 
 public class NotificationsServicesTests
 {
-    private readonly BetBuilderOddsNotificationServices service;
-    private readonly IOptions<AppSettingsKey> mockAppSettingsKey;
-    private readonly InvokeExternalAPIServices mockInvokeExternalApiServices;
-    private readonly GenerateServices mockGenerateServices;
-    private readonly CreateRequestServices mockCreateRequestServices;
+    private readonly BetBuilderOddsNotificationServicesImp service;
 
     public NotificationsServicesTests()
     {
-        mockAppSettingsKey = Substitute.For<IOptions<AppSettingsKey>>();
-        mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
-        mockGenerateServices = Substitute.For<GenerateServices>();
-        mockCreateRequestServices = Substitute.For<CreateRequestServices>();
         service = new BetBuilderOddsNotificationServicesImp();
     }
 
@@ -125,7 +109,7 @@ public class NotificationsServicesTests
         // Assert
         Assert.NotNull(result);
         Assert.Single(result);
-        Assert.Equal(1.234567m, result[0].Odds);
+        Assert.Equal(1.23m, result[0].Odds);
     }
 
     private static Notification CreateMockNotification(string matchId, string betId, double odds)

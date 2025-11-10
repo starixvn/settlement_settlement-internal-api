@@ -10,7 +10,7 @@ public interface GenerateServices
     Results<string> CommandReplyMessageAsync(string response);
 }
 
-public class GenerateServicesImp(BetBuilderOddsNotificationServices notificationsServices) : GenerateServices
+public class GenerateServicesImp(BetBuilderOddsNotificationServices betBuilderOddsNotificationServices) : GenerateServices
 {
     public async Task<Results<NotificationsModels>> GetNotificationsAsync(string response)
     {
@@ -60,7 +60,7 @@ public class GenerateServicesImp(BetBuilderOddsNotificationServices notification
 
     private NotificationsModels ProcessSuccessResponse(NotificationsQueryResultMessage commandReplyMessage)
     {
-        var notificationsList = notificationsServices.ExtractOddsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
+        var notificationsList = betBuilderOddsNotificationServices.ExtractOddsFromNotifications(commandReplyMessage.QueryResult.Notifications.Notifications_);
         return new NotificationsModels
         {
             Offset = commandReplyMessage.QueryResult.Notifications.Offset,

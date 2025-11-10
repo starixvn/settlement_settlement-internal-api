@@ -22,7 +22,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
-            Legs = new List<Leg>
+            Selections = new List<Selection>
             {
                 new()
                 {
@@ -45,9 +45,9 @@ public class CreateRequestServicesTests
         Assert.NotNull(result.Request.VoidLegs.Bet);
         Assert.Equal("T001", result.Request.VoidLegs.Bet.BetId.Id);
         Assert.Equal("1001", result.Request.VoidLegs.Bet.UserId.Id);
-        Assert.Single(result.Request.VoidLegs.Legs);
+        Assert.Single(result.Request.VoidLegs.BetBuilderSelections);
 
-        var leg = result.Request.VoidLegs.Legs[0];
+        var leg = result.Request.VoidLegs.BetBuilderSelections[0];
         Assert.Equal("W001", leg.WayId.Id);
         Assert.Equal("71907578", leg.Market.MatchId.Id);
         Assert.Equal("71907578_8_1", leg.Market.MarketId.Id);
@@ -62,7 +62,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
-            Legs = new List<Leg>
+            Selections = new List<Selection>
             {
                 new()
                 {
@@ -84,14 +84,14 @@ public class CreateRequestServicesTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Request.VoidLegs.Legs.Count);
+        Assert.Equal(2, result.Request.VoidLegs.BetBuilderSelections.Count);
 
-        var leg1 = result.Request.VoidLegs.Legs[0];
+        var leg1 = result.Request.VoidLegs.BetBuilderSelections[0];
         Assert.Equal("W001", leg1.WayId.Id);
         Assert.Equal("71907578", leg1.Market.MatchId.Id);
         Assert.Equal("71907578_8_1", leg1.Market.MarketId.Id);
 
-        var leg2 = result.Request.VoidLegs.Legs[1];
+        var leg2 = result.Request.VoidLegs.BetBuilderSelections[1];
         Assert.Equal("W002", leg2.WayId.Id);
         Assert.Equal("71907579", leg2.Market.MatchId.Id);
         Assert.Equal("71907579_8_2", leg2.Market.MarketId.Id);
@@ -106,7 +106,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
-            Legs = new List<Leg>
+            Selections = new List<Selection>
             {
                 new()
                 {
@@ -129,9 +129,9 @@ public class CreateRequestServicesTests
         Assert.NotNull(result.Request.UnvoidLegs.Bet);
         Assert.Equal("T001", result.Request.UnvoidLegs.Bet.BetId.Id);
         Assert.Equal("1001", result.Request.UnvoidLegs.Bet.UserId.Id);
-        Assert.Single(result.Request.UnvoidLegs.Legs);
+        Assert.Single(result.Request.UnvoidLegs.BetBuilderSelections);
 
-        var leg = result.Request.UnvoidLegs.Legs[0];
+        var leg = result.Request.UnvoidLegs.BetBuilderSelections[0];
         Assert.Equal("W001", leg.WayId.Id);
         Assert.Equal("71907578", leg.Market.MatchId.Id);
         Assert.Equal("71907578_8_1", leg.Market.MarketId.Id);
@@ -163,7 +163,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
-            Legs = new List<Leg>()
+            Selections = new List<Selection>()
         };
 
         // Act

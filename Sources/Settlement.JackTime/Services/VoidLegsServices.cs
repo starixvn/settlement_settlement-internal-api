@@ -78,7 +78,7 @@ public class VoidLegsServicesImp(
         var url = $"{appSettingsKey.Value.ThirdPartyUri.JackTimeCommand}";
 
         var response = await invokeExternalApiServices.PostAsync(requestString, url);
-        LogService.Info($"JackTime VoidLegsServices Response: {response}");
+        LogService.Info($"JackTime VoidLegsServices Response: {requestString} - {response}");
 
         return generateServices.CommandReplyMessageAsync(response);
     }
