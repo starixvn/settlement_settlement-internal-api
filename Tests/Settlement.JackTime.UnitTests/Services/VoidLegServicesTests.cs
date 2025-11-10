@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fanex.Logging;
+using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Settlement.Internal.Models;
+using Settlement.JackTime.Models;
 using Settlement.JackTime.Requests;
 using Settlement.JackTime.Services;
-using Settlement.JackTime.Models;
+using SharpRaven;
 
 namespace Settlement.JackTime.UnitTests.Services;
 
@@ -23,6 +26,17 @@ public class VoidLegServicesTests
         mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
         mockGenerateServices = Substitute.For<GenerateServices>();
         mockCreateRequestServices = Substitute.For<CreateRequestServices>();
+
+        var logEngine = new List<ILogEngine>();
+
+        var sentryEngineOptions = new SentryEngineOptions
+        {
+            Dsn = new Dsn("http://2dfee6c5bbc844558ad3bef5f4b59ee1@sentry.nexdev.net/9")
+        };
+        logEngine.Add(new SentryLogging(sentryEngineOptions));
+
+        LogManager.SetDefaultLogCategory("NAP-Settlement-LOCAL").Use(logEngine);
+
         service = new VoidLegsServicesImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
     }
 

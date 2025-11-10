@@ -44,6 +44,7 @@ public class GenerateServicesImp(BetBuilderOddsNotificationServices notification
     public Results<string> CommandReplyMessageAsync(string response)
     {
         var commandReplyMessage = CommandReplyMessage.Parser.ParseJson(response);
+
         var resultCode = commandReplyMessage.Header.ReplyStatusCode.ToString();
 
         return new Results<string>

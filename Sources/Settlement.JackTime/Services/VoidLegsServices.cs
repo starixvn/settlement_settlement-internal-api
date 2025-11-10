@@ -74,9 +74,12 @@ public class VoidLegsServicesImp(
     {
         var commandRequest = createCommandRequest(voidBetInfo);
         var requestString = new JsonFormatter(JsonFormatter.Settings.Default).Format(commandRequest);
+
         var url = $"{appSettingsKey.Value.ThirdPartyUri.JackTimeCommand}";
 
         var response = await invokeExternalApiServices.PostAsync(requestString, url);
+        LogService.Info($"JackTime VoidLegsServices Response: {response}");
+
         return generateServices.CommandReplyMessageAsync(response);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Settlement.JackTime.Models;
+﻿using Settlement.Internal.EndpointFilters;
+using Settlement.JackTime.Models;
 using Settlement.JackTime.Requests;
 using Settlement.JackTime.Services;
 
@@ -11,6 +12,7 @@ public class VoidLegsEndpoint(VoidLegsServices voidLegsServices) : IEndpoint<IRe
         app.MapPost("api/jacktime-cash-out/void-legs",
              async (VoidLegRequest request) => await HandleAsync(request))
             .Produces<Results<string>>()
+            .AddEndpointFilter<LogRequestFilter>()
             .WithTags("JackTimeEndpoints");
     }
 
