@@ -15,6 +15,8 @@ public class VoidBetInfo
 
     public long CustId { get; set; }
 
+    public byte Type { get; set; }
+
     public List<Selection> Selections { get; set; } = [];
 }
 

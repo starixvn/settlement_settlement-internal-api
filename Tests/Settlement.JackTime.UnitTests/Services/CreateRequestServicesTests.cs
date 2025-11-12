@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Settlement.JackTime.Constants;
 using Settlement.JackTime.Requests;
 using Settlement.JackTime.Services;
 
@@ -22,6 +23,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
+            Type = VoidLegsType.BuilderSelections,
             Selections = new List<Selection>
             {
                 new()
@@ -62,6 +64,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
+            Type = VoidLegsType.BuilderSelections,
             Selections = new List<Selection>
             {
                 new()
@@ -106,6 +109,7 @@ public class CreateRequestServicesTests
             TransactionId = "451678251421532160_20251030002219",
             TransId = "T001",
             CustId = 1001,
+            Type = VoidLegsType.BuilderSelections,
             Selections = new List<Selection>
             {
                 new()

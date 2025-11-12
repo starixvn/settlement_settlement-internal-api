@@ -1,4 +1,5 @@
-﻿using Settlement.JackTime.Requests;
+﻿using Settlement.JackTime.Constants;
+using Settlement.JackTime.Requests;
 
 namespace Settlement.JackTime.Services;
 
@@ -43,7 +44,15 @@ public class CreateRequestServicesImp : CreateRequestServices
         foreach (var leg in voidBetInfo.Selections)
         {
             var wayIdentifier = CreateWayIdentifier(leg);
-            commandRequest.Request.VoidLegs.BetBuilderSelections.Add(wayIdentifier);
+            if (voidBetInfo.Type == VoidLegsType.BuilderSelections)
+            {
+                commandRequest.Request.VoidLegs.BetBuilderSelections.Add(wayIdentifier);
+            }
+
+            if (voidBetInfo.Type == VoidLegsType.Legs)
+            {
+                commandRequest.Request.VoidLegs.Legs.Add(wayIdentifier);
+            }
         }
 
         return commandRequest;
@@ -63,7 +72,15 @@ public class CreateRequestServicesImp : CreateRequestServices
         foreach (var leg in voidBetInfo.Selections)
         {
             var wayIdentifier = CreateWayIdentifier(leg);
-            commandRequest.Request.UnvoidLegs.BetBuilderSelections.Add(wayIdentifier);
+            if (voidBetInfo.Type == VoidLegsType.BuilderSelections)
+            {
+                commandRequest.Request.UnvoidLegs.BetBuilderSelections.Add(wayIdentifier);
+            }
+
+            if (voidBetInfo.Type == VoidLegsType.Legs)
+            {
+                commandRequest.Request.UnvoidLegs.Legs.Add(wayIdentifier);
+            }
         }
 
         return commandRequest;
