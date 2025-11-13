@@ -3,14 +3,14 @@ using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
 
-public interface GenerateServices
+public interface GenerateService
 {
     Task<Results<NotificationsModels>> GetNotificationsAsync(string response);
 
     Results<string> CommandReplyMessageAsync(string response);
 }
 
-public class GenerateServicesImp(BetBuilderOddsNotificationServices betBuilderOddsNotificationServices) : GenerateServices
+public class GenerateServiceImp(BetBuilderOddsNotificationService betBuilderOddsNotificationServices) : GenerateService
 {
     public async Task<Results<NotificationsModels>> GetNotificationsAsync(string response)
     {

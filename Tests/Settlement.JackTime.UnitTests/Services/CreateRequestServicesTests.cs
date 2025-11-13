@@ -7,11 +7,12 @@ namespace Settlement.JackTime.UnitTests.Services;
 
 public class CreateRequestServicesTests
 {
-    private readonly CreateRequestServices service;
+    private readonly CreateRequestService service;
 
     public CreateRequestServicesTests()
     {
-        service = new CreateRequestServicesImp();
+        var commandService = new CommandServiceImp();
+        service = new CreateRequestServiceImp(commandService);
     }
 
     [Fact]

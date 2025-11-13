@@ -6,11 +6,11 @@ namespace Settlement.JackTime.UnitTests.Services;
 
 public class NotificationsServicesTests
 {
-    private readonly BetBuilderOddsNotificationServicesImp service;
+    private readonly BetBuilderOddsNotificationServiceImp service;
 
     public NotificationsServicesTests()
     {
-        service = new BetBuilderOddsNotificationServicesImp();
+        service = new BetBuilderOddsNotificationServiceImp();
     }
 
     [Fact]

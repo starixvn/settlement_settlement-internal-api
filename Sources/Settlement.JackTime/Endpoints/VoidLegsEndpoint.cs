@@ -5,7 +5,7 @@ using Settlement.JackTime.Services;
 
 namespace Settlement.JackTime.Endpoints;
 
-public class VoidLegsEndpoint(VoidLegsServices voidLegsServices) : IEndpoint<IResult, VoidLegRequest>
+public class VoidLegsEndpoint(VoidLegsService voidLegsServices) : IEndpoint<IResult, VoidLegRequest>
 {
     public void AddRoute(IEndpointRouteBuilder app)
     {
@@ -18,8 +18,8 @@ public class VoidLegsEndpoint(VoidLegsServices voidLegsServices) : IEndpoint<IRe
 
     public async Task<IResult> HandleAsync(VoidLegRequest request)
     {
-        var balls = await voidLegsServices.VoidLegsAsync(request);
+        var results = await voidLegsServices.VoidLegsAsync(request);
 
-        return Results.Ok(balls);
+        return Results.Ok(results);
     }
 }

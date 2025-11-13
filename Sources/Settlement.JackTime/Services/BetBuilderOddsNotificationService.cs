@@ -2,12 +2,12 @@
 
 namespace Settlement.JackTime.Services;
 
-public interface BetBuilderOddsNotificationServices
+public interface BetBuilderOddsNotificationService
 {
     List<Models.BetBuilderOddsNotification> ExtractOddsFromNotifications(RepeatedField<Notification> notifications);
 }
 
-public class BetBuilderOddsNotificationServicesImp : BetBuilderOddsNotificationServices
+public class BetBuilderOddsNotificationServiceImp : BetBuilderOddsNotificationService
 {
     public List<Models.BetBuilderOddsNotification> ExtractOddsFromNotifications(RepeatedField<Notification> notifications)
     {

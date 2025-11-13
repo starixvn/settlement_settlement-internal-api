@@ -15,12 +15,12 @@ namespace Settlement.JackTime.UnitTests.Services;
 public class InvokeExternalAPIServicesTests
 {
     private readonly IHttpClientFactory _mockHttpClientFactory;
-    private readonly InvokeExternalAPIServices _service;
+    private readonly InvokeExternalAPIService _service;
 
     public InvokeExternalAPIServicesTests()
     {
         _mockHttpClientFactory = Substitute.For<IHttpClientFactory>();
-        _service = new InvokeExternalAPIServicesImp(_mockHttpClientFactory);
+        _service = new InvokeExternalAPIServiceImp(_mockHttpClientFactory);
     }
 
     [Fact]

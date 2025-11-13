@@ -3,12 +3,12 @@ using Polly;
 
 namespace Settlement.JackTime.Services;
 
-public interface InvokeExternalAPIServices
+public interface InvokeExternalAPIService
 {
     Task<string> PostAsync(string requestString, string apiUrl);
 }
 
-public class InvokeExternalAPIServicesImp(IHttpClientFactory httpClientFactory) : InvokeExternalAPIServices
+public class InvokeExternalAPIServiceImp(IHttpClientFactory httpClientFactory) : InvokeExternalAPIService
 {
     public async Task<string> PostAsync(string requestString, string apiUrl)
     {

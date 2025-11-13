@@ -1,4 +1,3 @@
-using Google.Protobuf;
 using Microsoft.Extensions.Options;
 using Settlement.Internal.Models;
 using Settlement.JackTime.Constants;
@@ -7,7 +6,7 @@ using Settlement.JackTime.Requests;
 
 namespace Settlement.JackTime.Services;
 
-public interface VoidLegsServices
+public interface VoidLegsService
 {
     Task<Results<string>> VoidBetAsync(VoidBetInfoRequest voidBetInfoRequest);
 
@@ -16,11 +15,11 @@ public interface VoidLegsServices
     Task<Results<string>> UnVoidLegsAsync(VoidLegRequest voidLegRequest);
 }
 
-public class VoidLegsServicesImp(
+public class VoidLegsServiceImp(
     IOptions<AppSettingsKey> appSettingsKey,
-    InvokeExternalAPIServices invokeExternalApiServices,
-    GenerateServices generateServices,
-    CreateRequestServices commandRequestServices) : VoidLegsServices
+    InvokeExternalAPIService invokeExternalApiServices,
+    GenerateService generateServices,
+    CreateRequestService commandRequestServices) : VoidLegsService
 {
     public async Task<Results<string>> VoidBetAsync(VoidBetInfoRequest voidBetInfoRequest)
     {

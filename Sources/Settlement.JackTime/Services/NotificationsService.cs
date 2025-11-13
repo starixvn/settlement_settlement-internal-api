@@ -1,20 +1,19 @@
-﻿using Google.Protobuf;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Settlement.Internal.Models;
 using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
 
-public interface NotificationsServices
+public interface NotificationsService
 {
     Task<Results<NotificationsModels>> GetNotificationsAsync(ulong offset);
 }
 
-public class NotificationsServicesImp(
+public class NotificationsServiceImp(
     IOptions<AppSettingsKey> appSettingsKey,
-    InvokeExternalAPIServices invokeExternalApiServices,
-    GenerateServices generateServices,
-    CreateRequestServices createRequestServices) : NotificationsServices
+    InvokeExternalAPIService invokeExternalApiServices,
+    GenerateService generateServices,
+    CreateRequestService createRequestServices) : NotificationsService
 {
     public async Task<Results<NotificationsModels>> GetNotificationsAsync(ulong offset)
     {

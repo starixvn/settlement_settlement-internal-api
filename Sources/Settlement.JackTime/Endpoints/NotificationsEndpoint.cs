@@ -3,7 +3,7 @@ using Settlement.JackTime.Services;
 
 namespace Settlement.JackTime.Endpoints;
 
-public class NotificationsEndpoint(NotificationsServices jackTimeServices) : IEndpoint<IResult, ulong>
+public class NotificationsEndpoint(NotificationsService jackTimeServices) : IEndpoint<IResult, ulong>
 {
     public void AddRoute(IEndpointRouteBuilder app)
     {
@@ -15,8 +15,8 @@ public class NotificationsEndpoint(NotificationsServices jackTimeServices) : IEn
 
     public async Task<IResult> HandleAsync(ulong offset)
     {
-        var balls = await jackTimeServices.GetNotificationsAsync(offset);
+        var results = await jackTimeServices.GetNotificationsAsync(offset);
 
-        return Results.Ok(balls);
+        return Results.Ok(results);
     }
 }

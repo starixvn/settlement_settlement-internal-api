@@ -7,11 +7,12 @@ public static class JackTimeConfig
 {
     public static void JackTimeConfigServices(this IServiceCollection services)
     {
-        services.AddTransient<GenerateServices, GenerateServicesImp>();
-        services.AddTransient<InvokeExternalAPIServices, InvokeExternalAPIServicesImp>();
-        services.AddTransient<NotificationsServices, NotificationsServicesImp>();
-        services.AddTransient<BetBuilderOddsNotificationServices, BetBuilderOddsNotificationServicesImp>();
-        services.AddTransient<VoidLegsServices, VoidLegsServicesImp>();
-        services.AddTransient<CreateRequestServices, CreateRequestServicesImp>();
+        services.AddTransient<GenerateService, GenerateServiceImp>();
+        services.AddTransient<InvokeExternalAPIService, InvokeExternalAPIServiceImp>();
+        services.AddTransient<NotificationsService, NotificationsServiceImp>();
+        services.AddTransient<BetBuilderOddsNotificationService, BetBuilderOddsNotificationServiceImp>();
+        services.AddTransient<CommandService, CommandServiceImp>();
+        services.AddTransient<VoidLegsService, VoidLegsServiceImp>();
+        services.AddTransient<CreateRequestService, CreateRequestServiceImp>();
     }
 }

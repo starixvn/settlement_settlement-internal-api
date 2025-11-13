@@ -14,18 +14,18 @@ namespace Settlement.JackTime.UnitTests.Services;
 
 public class VoidLegServicesTests
 {
-    private readonly VoidLegsServicesImp service;
+    private readonly VoidLegsServiceImp service;
     private readonly IOptions<AppSettingsKey> mockAppSettingsKey;
-    private readonly InvokeExternalAPIServices mockInvokeExternalApiServices;
-    private readonly GenerateServices mockGenerateServices;
-    private readonly CreateRequestServices mockCreateRequestServices;
+    private readonly InvokeExternalAPIService mockInvokeExternalApiServices;
+    private readonly GenerateService mockGenerateServices;
+    private readonly CreateRequestService mockCreateRequestServices;
 
     public VoidLegServicesTests()
     {
         mockAppSettingsKey = Substitute.For<IOptions<AppSettingsKey>>();
-        mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
-        mockGenerateServices = Substitute.For<GenerateServices>();
-        mockCreateRequestServices = Substitute.For<CreateRequestServices>();
+        mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIService>();
+        mockGenerateServices = Substitute.For<GenerateService>();
+        mockCreateRequestServices = Substitute.For<CreateRequestService>();
 
         var logEngine = new List<ILogEngine>();
 
@@ -37,7 +37,7 @@ public class VoidLegServicesTests
 
         LogManager.SetDefaultLogCategory("NAP-Settlement-LOCAL").Use(logEngine);
 
-        service = new VoidLegsServicesImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
+        service = new VoidLegsServiceImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
     }
 
     [Fact]

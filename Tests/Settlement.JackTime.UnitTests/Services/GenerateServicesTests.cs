@@ -8,17 +8,17 @@ namespace Settlement.JackTime.UnitTests.Services;
 
 public class GenerateServicesTests
 {
-    private readonly GenerateServices service;
+    private readonly GenerateService service;
 
     public GenerateServicesTests()
     {
         // Create a real implementation instead of mocking
         var mockAppSettingsKey = Substitute.For<IOptions<AppSettingsKey>>();
-        var mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIServices>();
-        var mockGenerateServices = Substitute.For<GenerateServices>();
-        var mockCreateRequestServices = Substitute.For<CreateRequestServices>();
-        var notificationsServices = new NotificationsServicesImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
-        service = new GenerateServicesImp(new BetBuilderOddsNotificationServicesImp());
+        var mockInvokeExternalApiServices = Substitute.For<InvokeExternalAPIService>();
+        var mockGenerateServices = Substitute.For<GenerateService>();
+        var mockCreateRequestServices = Substitute.For<CreateRequestService>();
+        var notificationsServices = new NotificationsServiceImp(mockAppSettingsKey, mockInvokeExternalApiServices, mockGenerateServices, mockCreateRequestServices);
+        service = new GenerateServiceImp(new BetBuilderOddsNotificationServiceImp());
     }
 
     [Fact]
