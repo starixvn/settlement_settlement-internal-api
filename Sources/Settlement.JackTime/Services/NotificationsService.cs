@@ -17,6 +17,11 @@ public class NotificationsServiceImp(
 {
     public async Task<Results<NotificationsModels>> GetNotificationsAsync(ulong offset)
     {
+        if (string.IsNullOrEmpty(appSettingsKey.Value.ThirdPartyUri.JackTimeNotifications))
+        {
+            return new Results<NotificationsModels>();
+        }
+
         var requestNotification = createRequestServices.CreateNotificationsRequest(offset);
         var requestString = new JsonFormatter(JsonFormatter.Settings.Default).Format(requestNotification);
         var apiUrl = $"{appSettingsKey.Value.ThirdPartyUri.JackTimeNotifications}";
