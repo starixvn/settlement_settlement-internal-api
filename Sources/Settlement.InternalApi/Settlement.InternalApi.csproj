@@ -7,22 +7,24 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.8" />
-    <PackageReference Include="Fanex.Data" Version="4.3.4.3" />
-    <PackageReference Include="Fanex.Data.Repository" Version="4.3.4.3" />
-    <PackageReference Include="Fanex.Data.SqlServer" Version="4.3.4.3" />
+    <PackageReference Include="Fanex.Data" Version="4.3.4.5" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.3.4.5" />
+    <PackageReference Include="Fanex.Data.SqlServer" Version="4.3.4.5" />
     <PackageReference Include="Fanex.Logging" Version="2.0.2" />
     <PackageReference Include="Fanex.Logging.Extensions.Database" Version="2.0.2.1" />
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="2.0.2" />
     <PackageReference Include="Fanex.Settlement.Business" Version="1.0.26" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
     <PackageReference Include="MinimalApi.Endpoint" Version="1.3.0" />
-    <PackageReference Include="ONEbook.UM" Version="3.2.6" />
-    <PackageReference Include="Polly" Version="8.6.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageReference Include="ONEbook.UM" Version="3.2.6.2" />
+    <PackageReference Include="Polly" Version="8.6.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Settlement.EventManagement\Settlement.EventManagement.csproj" />
     <ProjectReference Include="..\Settlement.Gaming\Settlement.Gaming.csproj" />
     <ProjectReference Include="..\Settlement.Internal\Settlement.Internal.csproj" />
+    <ProjectReference Include="..\Settlement.JackTime\Settlement.JackTime.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.KLDR.json">

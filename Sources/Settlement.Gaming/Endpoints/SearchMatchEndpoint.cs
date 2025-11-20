@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using MinimalApi.Endpoint;
-using Settlement.Gaming.Criteria.Happy5;
+﻿using Settlement.Gaming.Criteria.Happy5;
 using Settlement.Gaming.Models.Happy5;
 using Settlement.Gaming.Services.Happy5;
 
-namespace Settlement.InternalApi.HappyFiveEndpoints;
+namespace Settlement.Gaming.Endpoints;
 
 public class SearchMatchEndpoint(
     IMapper mapper,

@@ -5,7 +5,9 @@ using ONEbook.UM.DependencyInjection;
 using Settlement.Internal.Models;
 using Settlement.InternalApi;
 using Settlement.InternalApi.Config;
+using Settlement.InternalApi.Extensions;
 using Settlement.InternalApi.Middleware;
+using Settlement.JackTime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,19 @@ var services = builder.Services;
 
 services.AddEndpoints();
 
+services.AddEndpointsFromAssemblies(
+   typeof(Settlement.EventManagement.Endpoints.RefreshMatchesEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.GetBallsEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.SearchMatchEndpoint).Assembly,
+   typeof(Settlement.Gaming.Endpoints.SettleEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.NotificationsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.VoidLegsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.UnVoidLegsEndpoint).Assembly,
+   typeof(Settlement.JackTime.Endpoints.VoidBetEndpoint).Assembly);
+
 services.AddHealthChecks();
+
+services.AddHttpClient();
 
 services.AddFanexSql(builder.Configuration);
 
@@ -22,6 +36,8 @@ services.AddOneBookUmForService(builder.Configuration);
 services.AddFanexLogSentry(builder.Configuration);
 
 services.AddInitialServices(builder.Configuration);
+
+services.JackTimeConfigServices();
 
 services.Configure<AppSettingsKey>(builder.Configuration);
 
