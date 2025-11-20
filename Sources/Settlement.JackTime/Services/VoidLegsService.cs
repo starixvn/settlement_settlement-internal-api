@@ -71,6 +71,14 @@ public class VoidLegsServiceImp(
         VoidBetInfo voidBetInfo,
         Func<VoidBetInfo, CommandRequestMessage> createCommandRequest)
     {
+        if (string.IsNullOrEmpty(appSettingsKey.Value.ThirdPartyUri.JackTimeCommand))
+        {
+            return new Results<string>
+            {
+                ErrMsg = Result.Success
+            };
+        }
+
         var commandRequest = createCommandRequest(voidBetInfo);
         var requestString = new JsonFormatter(JsonFormatter.Settings.Default).Format(commandRequest);
 

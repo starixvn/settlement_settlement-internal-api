@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Settlement.Internal.Models;
+using Settlement.JackTime.Constants;
 using Settlement.JackTime.Models;
 
 namespace Settlement.JackTime.Services;
@@ -19,7 +20,10 @@ public class NotificationsServiceImp(
     {
         if (string.IsNullOrEmpty(appSettingsKey.Value.ThirdPartyUri.JackTimeNotifications))
         {
-            return new Results<NotificationsModels>();
+            return new Results<NotificationsModels>
+            {
+                ErrMsg = Result.Success
+            };
         }
 
         var requestNotification = createRequestServices.CreateNotificationsRequest(offset);
